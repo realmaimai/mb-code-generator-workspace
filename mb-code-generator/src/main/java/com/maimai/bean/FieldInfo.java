@@ -1,9 +1,13 @@
 package com.maimai.bean;
 
 public class FieldInfo {
+    // field from table, example: user_id
     private String fieldName;
+    // field name with camelCase, example: userId
     private String propertyName;
+    // field type from table, example: int, big decimal
     private String sqlType;
+    // field type in Java, example: int, long
     private String javaType;
     private String comment;
     private boolean isAutoIncrement;

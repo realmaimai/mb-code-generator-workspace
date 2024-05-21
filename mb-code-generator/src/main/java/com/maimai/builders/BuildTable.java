@@ -1,9 +1,13 @@
 package com.maimai.builders;
 
+import com.maimai.bean.Constants;
+import com.maimai.bean.TableInfo;
 import com.maimai.utils.PropertiesUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 // TODO change this class to DatabaseUtils
@@ -28,13 +32,25 @@ public class BuildTable {
     public static void getTables() {
         PreparedStatement ps = null;
         ResultSet tableResult = null;
+        List<TableInfo> tableInfoList = new ArrayList<>();
+
         try {
             ps = connection.prepareStatement(SQL_SHOW_TABLE_STATUS);
             tableResult = ps.executeQuery();
             while (tableResult.next()) {
                 String tableName = tableResult.getString("name");
                 String comment = tableResult.getString("comment");
-                log.info("table name: {}, comment: {}", tableName, comment);
+
+                TableInfo tableInfo = new TableInfo();
+                tableInfo.setTableName(tableName);
+                tableInfo.setComment(comment);
+                String beanName = tableName;
+                if (Constants.IGNORE_TABLE_PREFIX) {
+                    beanName = tableName.substring(tableName.indexOf("_") + 1);
+                }
+                log.info(beanName);
+
+                tableInfoList.add(tableInfo);
             }
         } catch (Exception e) {
             log.info("get table from connection error: " + e);
