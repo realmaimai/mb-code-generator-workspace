@@ -8,3 +8,6 @@ db:
 ignore:
   table:
     prefix: "true"
+suffix:
+  bean:
+    param: Query

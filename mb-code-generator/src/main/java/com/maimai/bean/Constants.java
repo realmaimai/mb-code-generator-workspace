@@ -14,7 +14,7 @@ public class Constants {
     // if we want to ignore the prefix
     // when the table is started with "tb_" like "tb_order_info"
     public static boolean IGNORE_TABLE_PREFIX;
-    public static String SUFFIX_BEAN_QUERY;
+    public static String SUFFIX_BEAN_PARAM;
     public static String SUFFIX_BEAN_QUERY_FUZZY;
     public static String SUFFIX_BEAN_QUERY_TIME_START;
     public static String SUFFIX_BEAN_QUERY_TIME_END;
@@ -82,8 +82,8 @@ public class Constants {
         try {
             AUTHOR_COMMENT = PropertiesUtils.getString("author.comment");
             IGNORE_TABLE_PREFIX = Boolean.parseBoolean(PropertiesUtils.getString("ignore", "table", "prefix"));
-            SUFFIX_BEAN_QUERY = PropertiesUtils.getString("suffix.bean.query");
-            SUFFIX_BEAN_QUERY_FUZZY = PropertiesUtils.getString("suffix.bean.query.fuzzy");
+            SUFFIX_BEAN_PARAM= PropertiesUtils.getString("suffix", "bean", "param");
+            SUFFIX_BEAN_QUERY_FUZZY = PropertiesUtils.getString("suffix", "bean", "param", "fuzzy");
             SUFFIX_BEAN_QUERY_TIME_START = PropertiesUtils.getString("suffix.bean.query.time.start");
             SUFFIX_BEAN_QUERY_TIME_END = PropertiesUtils.getString("suffix.bean.query.time.end");
             SUFFIX_MAPPERS = PropertiesUtils.getString("suffix.mappers");
