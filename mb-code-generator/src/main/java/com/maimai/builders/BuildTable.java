@@ -6,6 +6,7 @@ import com.maimai.bean.TableInfo;
 import com.maimai.utils.PropertiesUtils;
 import com.maimai.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,9 +60,8 @@ public class BuildTable {
                 tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_PARAM);
                 log.info("table name: {}, table bean name: {}, table bean param name: {}", tableInfo.getTableName(),
                         tableInfo.getBeanName(), tableInfo.getBeanParamName());
-                readFieldInfo(tableInfo);
-
-                tableInfoList.add(tableInfo);
+                List<FieldInfo> fieldInfos = readFieldInfo(tableInfo);
+                log.info(fieldInfos.toString());
             }
         } catch (Exception e) {
             log.info("get table from connection error: " + e);
@@ -93,7 +93,7 @@ public class BuildTable {
     public static List<FieldInfo> readFieldInfo(TableInfo tableInfo) {
         PreparedStatement ps = null;
         ResultSet fieldResult = null;
-        List<TableInfo> fieldInfoList = new ArrayList<>();
+        List<FieldInfo> fieldInfoList = new ArrayList<>();
 
         try {
             ps = connection.prepareStatement(String.format(SQL_SHOW_FIELDS, tableInfo.getTableName()));
@@ -114,8 +114,21 @@ public class BuildTable {
                 fieldInfo.setComment(comment);
                 fieldInfo.setAutoIncrement("auto_increment".equalsIgnoreCase(extra));
                 fieldInfo.setSqlType(fieldType);
+                fieldInfo.setJavaType(processJavaType(fieldType));
+                if (ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES, fieldType)) {
+                    tableInfo.setHaveDateTime(true);
+                }
+                if (ArrayUtils.contains(Constants.SQL_DATE_TYPES, fieldType)) {
+                    tableInfo.setHaveDate(true);
+                }
+                if (ArrayUtils.contains(Constants.SQL_DECIMAL_TYPE, fieldType)) {
+                    tableInfo.setHaveDate(true);
+                }
+                fieldInfoList.add(fieldInfo);
+                tableInfo.setFieldInfoList(fieldInfoList);
 
             }
+
         } catch (Exception e) {
             log.info("get field information from connection error: " + e);
         } finally {
@@ -134,7 +147,7 @@ public class BuildTable {
                 }
             }
         }
-        return null;
+        return fieldInfoList;
     }
 
     /**
@@ -153,6 +166,23 @@ public class BuildTable {
             sb.append(s);
         }
         return sb.toString();
+    }
+
+    private static String processJavaType(String type) {
+        if(ArrayUtils.contains(Constants.SQL_DATE_TYPES,type)||ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES,type)){
+            return "Date";
+        }
+        else if(ArrayUtils.contains(Constants.SQL_DECIMAL_TYPE,type)){
+            return "BigDecimal";
+        }else if(ArrayUtils.contains(Constants.SQL_STRING_TYPE,type)){
+            return "String";
+        } else if (ArrayUtils.contains(Constants.SQL_INTEGER_TYPE,type)) {
+            return "Integer";
+        } else if (ArrayUtils.contains(Constants.SQL_LONG_TYPE,type)) {
+            return "Long";
+        }else {
+            throw new RuntimeException("cannot recognize sql type:"+type);
+        }
     }
 
     public static void main(String[] args) {
