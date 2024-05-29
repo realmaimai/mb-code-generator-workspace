@@ -11,3 +11,13 @@ ignore:
 suffix:
   bean:
     param: Query
+
+# base location
+path:
+  base: /Users/yule/Coding/mb-code-generator-workspace/mb-code-generator-demo/src/main
+
+# package name / directory name
+package:
+  base: com.maimai
+  po: entity.po
+  param: entity.query

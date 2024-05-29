@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 // TODO change this class to DatabaseUtils
 @Slf4j
@@ -61,8 +58,6 @@ public class BuildTable {
                 tableInfo.setComment(comment);
                 tableInfo.setBeanName(beanName);
                 tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_PARAM);
-                log.info("table name: {}, table bean name: {}, table bean param name: {}", tableInfo.getTableName(),
-                        tableInfo.getBeanName(), tableInfo.getBeanParamName());
                 readFieldInfo(tableInfo);
                 getKeyIndexInfo(tableInfo);
                 log.info("table info: " + JsonUtils.convertObj2Json(tableInfo));
@@ -169,9 +164,14 @@ public class BuildTable {
     public static void getKeyIndexInfo(TableInfo tableInfo) {
         PreparedStatement ps = null;
         ResultSet indexResult = null;
-        List<FieldInfo> fieldInfoList = new ArrayList<>();
 
         try {
+            Map<String, FieldInfo> tempMap = new HashMap<>();
+
+            for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
+                tempMap.put(fieldInfo.getFieldName(), fieldInfo);
+            }
+
             ps = connection.prepareStatement(String.format(SQL_SHOW_TABLE_INDEX, tableInfo.getTableName()));
             indexResult = ps.executeQuery();
             while (indexResult.next()) {
@@ -185,15 +185,10 @@ public class BuildTable {
                 Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
                 List<FieldInfo> keyFieldList = keyIndexMap.get(keyName);
                 if (Objects.isNull(keyFieldList)) {
-                    keyFieldList = new ArrayList<FieldInfo>();
+                    keyFieldList = new ArrayList<>();
                     keyIndexMap.put(keyName, keyFieldList);
                 }
-                for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
-                    if (fieldInfo.getFieldName().equals(columnName)) {
-                        keyFieldList.add(fieldInfo);
-                    }
-                    tableInfo.setKeyIndexMap(keyIndexMap);
-                }
+                keyFieldList.add(tempMap.get(columnName));
             }
 
         } catch (Exception e) {

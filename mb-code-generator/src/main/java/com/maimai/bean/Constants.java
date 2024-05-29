@@ -89,43 +89,42 @@ public class Constants {
             SUFFIX_MAPPERS = PropertiesUtils.getString("suffix.mappers");
 
 
-            PACKAGE_BASE = PropertiesUtils.getString("package.base");
-            PACKAGE_PO = PACKAGE_BASE + "." + PropertiesUtils.getString("package.po");
-            PACKAGE_VO = PACKAGE_BASE + "." + PropertiesUtils.getString("package.vo");
-            PACKAGE_QUERY = PACKAGE_BASE + "." + PropertiesUtils.getString("package.query");
-            PACKAGE_UTILS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.utils");
-            PACKAGE_ENUMS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.enums");
-            PACKAGE_MAPPERS = PACKAGE_BASE + "." + PropertiesUtils.getString("package.mappers");
-            PACKAGE_SERVICE = PACKAGE_BASE + "." + PropertiesUtils.getString("package.service");
-            PACKAGE_SERVICEIMPL = PACKAGE_BASE + "." + PropertiesUtils.getString("package.service.impl");
-            PACKAGE_CONTROLLER = PACKAGE_BASE + "." + PropertiesUtils.getString("package.controller");
-            PACKAGE_EXCEPTION = PACKAGE_BASE + "." + PropertiesUtils.getString("package.exception");
+            PACKAGE_BASE = PropertiesUtils.getString("package", "base");
+            PACKAGE_PO = PACKAGE_BASE + "." + PropertiesUtils.getString("package", "po");
+            PACKAGE_VO = PACKAGE_BASE + "." + PropertiesUtils.getString("package", "vo");
+            PACKAGE_QUERY = PACKAGE_BASE + "." + PropertiesUtils.getString("package","query");
+            PACKAGE_UTILS = PACKAGE_BASE + "." + PropertiesUtils.getString("package","utils");
+            PACKAGE_ENUMS = PACKAGE_BASE + "." + PropertiesUtils.getString("package","enums");
+            PACKAGE_MAPPERS = PACKAGE_BASE + "." + PropertiesUtils.getString("package","mappers");
+            PACKAGE_SERVICE = PACKAGE_BASE + "." + PropertiesUtils.getString("package","service");
+            PACKAGE_SERVICEIMPL = PACKAGE_BASE + "." + PropertiesUtils.getString("package","service","impl");
+            PACKAGE_CONTROLLER = PACKAGE_BASE + "." + PropertiesUtils.getString("package","controller");
+            PACKAGE_EXCEPTION = PACKAGE_BASE + "." + PropertiesUtils.getString("package","exception");
 
 
-            // TODO change parameters in getString method
-            PATH_BASE = PropertiesUtils.getString("path.base") + PATH_JAVA + "/" + PACKAGE_BASE.replace('.','/') + "/";
-            PATH_PO = PATH_BASE + "/" + PropertiesUtils.getString("package.po").replace('.','/') + "/";
-            PATH_VO = PATH_BASE + "/" + PropertiesUtils.getString("package.vo").replace('.','/') + "/";
-            PATH_QUERY = PATH_BASE + "/" + PropertiesUtils.getString("package.query").replace('.','/') + "/";
-            PATH_UTILS = PATH_BASE + "/" + PropertiesUtils.getString("package.utils").replace('.','/') + "/";
-            PATH_ENUMS = PATH_BASE + "/" + PropertiesUtils.getString("package.enums").replace('.','/') + "/";
-            PATH_MAPPERS = PATH_BASE + "/" + PropertiesUtils.getString("package.mappers").replace('.','/') + "/";
+            PATH_BASE = PropertiesUtils.getString("path","base") + "/" + PATH_JAVA + "/" + PACKAGE_BASE.replace('.','/') + "/";
+            PATH_PO = PATH_BASE + PropertiesUtils.getString("package", "po").replace('.','/') + "/";
+            PATH_VO = PATH_BASE + "/" + PropertiesUtils.getString("package", "vo").replace('.','/') + "/";
+            PATH_QUERY = PATH_BASE + "/" + PropertiesUtils.getString("package","query").replace('.','/') + "/";
+            PATH_UTILS = PATH_BASE + "/" + PropertiesUtils.getString("package","utils").replace('.','/') + "/";
+            PATH_ENUMS = PATH_BASE + "/" + PropertiesUtils.getString("package","enums").replace('.','/') + "/";
+            PATH_MAPPERS = PATH_BASE + "/" + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
             PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") + "/" + PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
-            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package.service") + "/";
-            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package.service.impl") + "/" ;
-            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package.controller") + "/" ;
-            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package.exception") + "/" ;
+            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
+            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;
+            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
+            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
 
 
-            IGNORE_BEAN_TOJSON_FIELD = PropertiesUtils.getString("ignore.bean.tojson.field");
-            IGNORE_BEAN_TOJSON_EXPRESSION = PropertiesUtils.getString("ignore.bean.tojson.expression");
-            IGNORE_BEAN_TOJSON_CLASS = PropertiesUtils.getString("ignore.bean.tojson.class");
+            IGNORE_BEAN_TOJSON_FIELD = PropertiesUtils.getString("ignore", "bean", "tojson", "field");
+            IGNORE_BEAN_TOJSON_EXPRESSION = PropertiesUtils.getString("ignore", "bean", "tojson", "expression");
+            IGNORE_BEAN_TOJSON_CLASS = PropertiesUtils.getString("ignore", "bean", "tojson", "class");
 
-            BEAN_DATE_FORMAT_EXPRESS = PropertiesUtils.getString("bean.date.format.express");
-            BEAN_DATE_FORMAT_CLASS = PropertiesUtils.getString("bean.date.format.class");
+            BEAN_DATE_FORMAT_EXPRESS = PropertiesUtils.getString("bean", "date", "format", "express");
+            BEAN_DATE_FORMAT_CLASS = PropertiesUtils.getString("bean", "date", "format", "class");
 
-            BEAN_DATE_UNFORMAT_EXPRESS = PropertiesUtils.getString("bean.date.unformat.express");
-            BEAN_DATE_UNFORMAT_CLASS = PropertiesUtils.getString("bean.date.unformat.class");
+            BEAN_DATE_UNFORMAT_EXPRESS = PropertiesUtils.getString("bean", "date", "unformat", "express");
+            BEAN_DATE_UNFORMAT_CLASS = PropertiesUtils.getString("bean", "date", "unformat", "class");
         } catch (Exception e) {
             log.info("constants cannot init: " + e);
         }
@@ -134,5 +133,7 @@ public class Constants {
     }
     public static void main(String[] args) {
         System.out.println(PATH_PO);
+        System.out.println(PACKAGE_BASE);
+        System.out.println(PATH_BASE);
     }
 }
