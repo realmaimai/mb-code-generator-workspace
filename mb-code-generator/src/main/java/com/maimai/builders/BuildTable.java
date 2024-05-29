@@ -3,6 +3,7 @@ package com.maimai.builders;
 import com.maimai.bean.Constants;
 import com.maimai.bean.FieldInfo;
 import com.maimai.bean.TableInfo;
+import com.maimai.utils.JsonUtils;
 import com.maimai.utils.PropertiesUtils;
 import com.maimai.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 // TODO change this class to DatabaseUtils
@@ -18,7 +20,8 @@ import java.util.Objects;
 public class BuildTable {
     private static Connection connection = null;
     private static final String SQL_SHOW_TABLE_STATUS = "show table status";
-    private static final String SQL_SHOW_FIELDS= "show full fields from %s";
+    private static final String SQL_SHOW_TABLE_FIELDS= "show full fields from %s";
+    private static final String SQL_SHOW_TABLE_INDEX= "show index from %s";
 
     static {
         String driverName = PropertiesUtils.getString("db", "driver", "name");
@@ -33,7 +36,7 @@ public class BuildTable {
         }
     }
 
-    public static void getTables() {
+    public static List<TableInfo> getTables() {
         PreparedStatement ps = null;
         ResultSet tableResult = null;
         List<TableInfo> tableInfoList = new ArrayList<>();
@@ -60,11 +63,13 @@ public class BuildTable {
                 tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_PARAM);
                 log.info("table name: {}, table bean name: {}, table bean param name: {}", tableInfo.getTableName(),
                         tableInfo.getBeanName(), tableInfo.getBeanParamName());
-                List<FieldInfo> fieldInfos = readFieldInfo(tableInfo);
-                log.info(fieldInfos.toString());
+                readFieldInfo(tableInfo);
+                getKeyIndexInfo(tableInfo);
+                log.info("table info: " + JsonUtils.convertObj2Json(tableInfo));
+                tableInfoList.add(tableInfo);
             }
         } catch (Exception e) {
-            log.info("get table from connection error: " + e);
+            log.info("get table error: " + e);
         } finally {
             if (!Objects.isNull(ps)) {
                 try {
@@ -88,15 +93,20 @@ public class BuildTable {
                 }
             }
         }
+        return tableInfoList;
     }
 
-    public static List<FieldInfo> readFieldInfo(TableInfo tableInfo) {
+    public static void readFieldInfo(TableInfo tableInfo) {
         PreparedStatement ps = null;
         ResultSet fieldResult = null;
         List<FieldInfo> fieldInfoList = new ArrayList<>();
 
+        boolean haveDate = false;
+        boolean haveDateTime = false;
+        boolean haveDecimal = false;
+
         try {
-            ps = connection.prepareStatement(String.format(SQL_SHOW_FIELDS, tableInfo.getTableName()));
+            ps = connection.prepareStatement(String.format(SQL_SHOW_TABLE_FIELDS, tableInfo.getTableName()));
             fieldResult = ps.executeQuery();
             while (fieldResult.next()) {
                 String fieldName = fieldResult.getString("field");
@@ -115,15 +125,21 @@ public class BuildTable {
                 fieldInfo.setAutoIncrement("auto_increment".equalsIgnoreCase(extra));
                 fieldInfo.setSqlType(fieldType);
                 fieldInfo.setJavaType(processJavaType(fieldType));
+
+                // check table has special type
                 if (ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES, fieldType)) {
-                    tableInfo.setHaveDateTime(true);
+                    haveDateTime = true;
                 }
                 if (ArrayUtils.contains(Constants.SQL_DATE_TYPES, fieldType)) {
-                    tableInfo.setHaveDate(true);
+                    haveDate = true;
                 }
                 if (ArrayUtils.contains(Constants.SQL_DECIMAL_TYPE, fieldType)) {
-                    tableInfo.setHaveDate(true);
+                    haveDecimal = true;
                 }
+                tableInfo.setHaveDateTime(haveDateTime);
+                tableInfo.setHaveDate(haveDate);
+                tableInfo.setHaveBigDecimal(haveDecimal);
+
                 fieldInfoList.add(fieldInfo);
                 tableInfo.setFieldInfoList(fieldInfoList);
 
@@ -147,7 +163,57 @@ public class BuildTable {
                 }
             }
         }
-        return fieldInfoList;
+    }
+
+
+    public static void getKeyIndexInfo(TableInfo tableInfo) {
+        PreparedStatement ps = null;
+        ResultSet indexResult = null;
+        List<FieldInfo> fieldInfoList = new ArrayList<>();
+
+        try {
+            ps = connection.prepareStatement(String.format(SQL_SHOW_TABLE_INDEX, tableInfo.getTableName()));
+            indexResult = ps.executeQuery();
+            while (indexResult.next()) {
+                String keyName = indexResult.getString("key_name");
+                Integer nonUnique = indexResult.getInt("non_unique");
+                // check if it is auto-increment
+                String columnName = indexResult.getString("column_name");
+                if (nonUnique == 1) {
+                    continue;
+                }
+                Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
+                List<FieldInfo> keyFieldList = keyIndexMap.get(keyName);
+                if (Objects.isNull(keyFieldList)) {
+                    keyFieldList = new ArrayList<FieldInfo>();
+                    keyIndexMap.put(keyName, keyFieldList);
+                }
+                for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
+                    if (fieldInfo.getFieldName().equals(columnName)) {
+                        keyFieldList.add(fieldInfo);
+                    }
+                    tableInfo.setKeyIndexMap(keyIndexMap);
+                }
+            }
+
+        } catch (Exception e) {
+            log.info("get index information error: " + e);
+        } finally {
+            if (!Objects.isNull(ps)) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    log.info("prepare statement error: " + e);
+                }
+            }
+            if (!Objects.isNull(indexResult)) {
+                try {
+                    indexResult.close();
+                } catch (SQLException e) {
+                    log.info("result set error: " + e);
+                }
+            }
+        }
     }
 
     /**
