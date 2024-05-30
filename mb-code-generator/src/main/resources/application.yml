@@ -8,6 +8,22 @@ db:
 ignore:
   table:
     prefix: "true"
+
+bean:
+  # support multiple json handle class
+  tojson:
+    field: companyId, status
+    expression: @JsonIgnore
+    class: import com.fasterxml.jackson.annotation.JsonIgnore
+  # date format serialization
+  date:
+    format:
+      serialization: @JsonFormat(pattern = "%s", timezone = "GMT+2")
+      serialization-class: com.fasterxml.jackson.annotation.JsonFormat
+      deserialization: @DateTimeFormat (pattern = "%s")
+      deserialization-class: org.springframework.format.annotation.DateTimeFormat
+
+
 suffix:
   bean:
     param: Query
@@ -21,3 +37,6 @@ package:
   base: com.maimai
   po: entity.po
   param: entity.query
+
+comment:
+  author: maimai

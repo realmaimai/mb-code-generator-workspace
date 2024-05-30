@@ -113,9 +113,10 @@ public class BuildTable {
                 if (fieldType.indexOf("(") > 0) {
                     fieldType = fieldType.substring(0, fieldType.indexOf("("));
                 }
-                fieldName = processField(fieldName, false);
+                String propertyName = processField(fieldName, false);
                 FieldInfo fieldInfo = new FieldInfo();
                 fieldInfo.setFieldName(fieldName);
+                fieldInfo.setPropertyName(propertyName);
                 fieldInfo.setComment(comment);
                 fieldInfo.setAutoIncrement("auto_increment".equalsIgnoreCase(extra));
                 fieldInfo.setSqlType(fieldType);

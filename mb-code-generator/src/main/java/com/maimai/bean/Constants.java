@@ -10,7 +10,7 @@ public class Constants {
     public static String STATIC = "static";
     public static String PATH_JAVA = "java";
     public static String PATH_RESOURCE = "resources";
-    public static String AUTHOR_COMMENT;
+    public static String COMMENT_AUTHOR;
     // if we want to ignore the prefix
     // when the table is started with "tb_" like "tb_order_info"
     public static boolean IGNORE_TABLE_PREFIX;
@@ -65,10 +65,10 @@ public class Constants {
     public static String IGNORE_BEAN_TOJSON_FIELD;
     public static String IGNORE_BEAN_TOJSON_EXPRESSION;
     public static String IGNORE_BEAN_TOJSON_CLASS;
-    public static String BEAN_DATE_FORMAT_EXPRESS;
-    public static String BEAN_DATE_FORMAT_CLASS;
-    public static String BEAN_DATE_UNFORMAT_EXPRESS;
-    public static String BEAN_DATE_UNFORMAT_CLASS;
+    public static String BEAN_DATE_FORMAT_SERIALIZATION;
+    public static String BEAN_DATE_FORMAT_SERIALIZATION_CLASS;
+    public static String BEAN_DATE_FORMAT_DESERIALIZATION;
+    public static String BEAN_DATE_FORMAT_DESERIALIZATION_CLASS;
 
     //  mapping of sql type to java object
     public final static String[] SQL_DATE_TIME_TYPES = new String[]{"datetime", "timestamp"};
@@ -80,7 +80,7 @@ public class Constants {
 
     static {
         try {
-            AUTHOR_COMMENT = PropertiesUtils.getString("author.comment");
+            COMMENT_AUTHOR =  PropertiesUtils.getString("comment", "author");
             IGNORE_TABLE_PREFIX = Boolean.parseBoolean(PropertiesUtils.getString("ignore", "table", "prefix"));
             SUFFIX_BEAN_PARAM= PropertiesUtils.getString("suffix", "bean", "param");
             SUFFIX_BEAN_QUERY_FUZZY = PropertiesUtils.getString("suffix", "bean", "param", "fuzzy");
@@ -120,11 +120,11 @@ public class Constants {
             IGNORE_BEAN_TOJSON_EXPRESSION = PropertiesUtils.getString("ignore", "bean", "tojson", "expression");
             IGNORE_BEAN_TOJSON_CLASS = PropertiesUtils.getString("ignore", "bean", "tojson", "class");
 
-            BEAN_DATE_FORMAT_EXPRESS = PropertiesUtils.getString("bean", "date", "format", "express");
-            BEAN_DATE_FORMAT_CLASS = PropertiesUtils.getString("bean", "date", "format", "class");
+            BEAN_DATE_FORMAT_SERIALIZATION = PropertiesUtils.getString("bean", "date", "format", "serialization");
+            BEAN_DATE_FORMAT_SERIALIZATION_CLASS = PropertiesUtils.getString("bean", "date", "format", "serialization-class");
 
-            BEAN_DATE_UNFORMAT_EXPRESS = PropertiesUtils.getString("bean", "date", "unformat", "express");
-            BEAN_DATE_UNFORMAT_CLASS = PropertiesUtils.getString("bean", "date", "unformat", "class");
+            BEAN_DATE_FORMAT_DESERIALIZATION = PropertiesUtils.getString("bean", "date", "format", "deserialization");
+            BEAN_DATE_FORMAT_DESERIALIZATION_CLASS = PropertiesUtils.getString("bean", "date", "format", "deserialization-class");
         } catch (Exception e) {
             log.info("constants cannot init: " + e);
         }

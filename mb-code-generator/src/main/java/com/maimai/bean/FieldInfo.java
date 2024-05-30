@@ -3,7 +3,7 @@ package com.maimai.bean;
 public class FieldInfo {
     // field from table, example: user_id
     private String fieldName;
-    // field name with camelCase, example: userId
+    // field name with camelCase, usually used in java, example: userId
     private String propertyName;
     // field type from table, example: int, big decimal
     private String sqlType;

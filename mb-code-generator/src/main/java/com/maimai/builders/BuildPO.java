@@ -1,6 +1,7 @@
 package com.maimai.builders;
 
 import com.maimai.bean.Constants;
+import com.maimai.bean.FieldInfo;
 import com.maimai.bean.TableInfo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,9 +21,46 @@ public class BuildPO {
         OutputStreamWriter outputStreamWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
-            out = new FileInputStream();
-        } catch (Exception e) {
+            out = new FileOutputStream(poFile);
+            outputStreamWriter = new OutputStreamWriter(out);
+            bufferedWriter = new BufferedWriter(outputStreamWriter);
 
+            bufferedWriter.write("package " + Constants.PACKAGE_PO + ";");
+            bufferedWriter.newLine();
+            bufferedWriter.newLine();
+
+            if (tableInfo.isHaveBigDecimal()) {
+                bufferedWriter.write("import java.math.BigDecimal;");
+                bufferedWriter.newLine();
+            }
+            if (tableInfo.isHaveDate() || tableInfo.isHaveDateTime()) {
+                bufferedWriter.write("import java.util.Date;");
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.write("import java.io.Serializable;");
+            bufferedWriter.newLine();
+            bufferedWriter.newLine();
+
+            //
+            BuildComment.createClassComment(bufferedWriter, tableInfo.getComment());
+
+            bufferedWriter.write("public class " + tableInfo.getBeanName() + " implements Serializable {");
+            bufferedWriter.newLine();
+
+            // loop field info list
+            for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
+                BuildComment.createFieldComment(bufferedWriter, fieldInfo.getComment());
+                bufferedWriter.write("\tprivate " + fieldInfo.getJavaType() + " " + fieldInfo.getPropertyName() + ";");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+            }
+
+
+            bufferedWriter.write("}");
+            bufferedWriter.flush();
+
+        } catch (Exception e) {
+            log.info("file execution error: " + e);
         } finally {
             if (Objects.isNull(bufferedWriter)) {
                 try {
