@@ -20,7 +20,7 @@ public class PropertiesUtils {
             is = PropertiesUtils.class.getClassLoader().getResourceAsStream("application.yml");
             yamlProperties = yaml.load(is);
         } catch (Exception e) {
-
+            log.info("yaml loading error: " + e.getMessage());
         } finally {
             if (!Objects.isNull(is)) {
                 try {
