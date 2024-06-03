@@ -105,16 +105,15 @@ public class Constants {
             PATH_BASE = PropertiesUtils.getString("path","base") + "/" + PATH_JAVA + "/" + PACKAGE_BASE.replace('.','/') + "/";
             PATH_PO = PATH_BASE + PropertiesUtils.getString("package", "po").replace('.','/') + "/";
             PATH_VO = PATH_BASE + "/" + PropertiesUtils.getString("package", "vo").replace('.','/') + "/";
-            PATH_QUERY = PATH_BASE + "/" + PropertiesUtils.getString("package","query").replace('.','/') + "/";
-            PATH_UTILS = PATH_BASE + "/" + PropertiesUtils.getString("package","utils").replace('.','/') + "/";
-            PATH_ENUMS = PATH_BASE + "/" + PropertiesUtils.getString("package","enums").replace('.','/') + "/";
-            PATH_MAPPERS = PATH_BASE + "/" + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
-            PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") + "/" + PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
-            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
-            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;
-            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
-            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
-
+//            PATH_QUERY = PATH_BASE + "/" + PropertiesUtils.getString("package","query").replace('.','/') + "/";
+//            PATH_UTILS = PATH_BASE + "/" + PropertiesUtils.getString("package","utils").replace('.','/') + "/";
+//            PATH_ENUMS = PATH_BASE + "/" + PropertiesUtils.getString("package","enums").replace('.','/') + "/";
+//            PATH_MAPPERS = PATH_BASE + "/" + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
+//            PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") + "/" + PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
+//            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
+//            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;
+//            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
+//            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
 
             IGNORE_BEAN_TOJSON_FIELD = PropertiesUtils.getString("ignore", "bean", "tojson", "field");
             IGNORE_BEAN_TOJSON_EXPRESSION = PropertiesUtils.getString("ignore", "bean", "tojson", "expression");
@@ -126,7 +125,7 @@ public class Constants {
             BEAN_DATE_FORMAT_DESERIALIZATION = PropertiesUtils.getString("bean", "date", "format", "deserialization");
             BEAN_DATE_FORMAT_DESERIALIZATION_CLASS = PropertiesUtils.getString("bean", "date", "format", "deserialization-class");
         } catch (Exception e) {
-            log.info("constants cannot init: " + e);
+            log.info("constants cannot init: {}", e.getMessage());
         }
 
 
@@ -135,5 +134,9 @@ public class Constants {
         System.out.println(PATH_PO);
         System.out.println(PACKAGE_BASE);
         System.out.println(PATH_BASE);
+        System.out.println(BEAN_DATE_FORMAT_SERIALIZATION);
+        System.out.println(BEAN_DATE_FORMAT_SERIALIZATION_CLASS);
+        System.out.println(IGNORE_BEAN_TOJSON_FIELD);
+        System.out.println(IGNORE_TABLE_PREFIX);
     }
 }

@@ -6,11 +6,15 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 
 @Slf4j
 public class PropertiesUtils {
     private static Map<String, Object> yamlProperties;
+    private static Map<String, String> PROP_MAP = new ConcurrentHashMap();
+
 
     static {
         InputStream is = null;
@@ -43,5 +47,10 @@ public class PropertiesUtils {
         // return the last key from the parameter
         // currentMap is the deepest map
         return (String) currentMap.get(keys[keys.length-1]);
+    }
+
+    public static void main(String[] args) {
+        String string = getString("bean", "date", "format", "serialization");
+        System.out.println(string);
     }
 }
