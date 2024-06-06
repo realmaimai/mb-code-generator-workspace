@@ -47,18 +47,21 @@ public class BuildPO {
             }
             bufferedWriter.write("import java.io.Serializable;");
             bufferedWriter.newLine();
-            bufferedWriter.newLine();
 
+            // add jsonignore class
             boolean haveIgnore = false;
             for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
                 if (ArrayUtils.contains(Constants.IGNORE_BEAN_TOJSON_FIELD.split(","), fieldInfo.getPropertyName())) {
                     haveIgnore = true;
-                    bufferedWriter.write(Constants.IGNORE_BEAN_TOJSON_CLASS + ";");
-                    bufferedWriter.newLine();
                 }
             }
+            if (haveIgnore) {
+                bufferedWriter.write(Constants.IGNORE_BEAN_TOJSON_CLASS + ";");
+                bufferedWriter.newLine();
+            }
 
-            //
+            bufferedWriter.newLine();
+
             BuildComment.createClassComment(bufferedWriter, tableInfo.getComment());
 
             bufferedWriter.write("public class " + tableInfo.getBeanName() + " implements Serializable {");

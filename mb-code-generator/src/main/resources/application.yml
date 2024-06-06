@@ -30,7 +30,7 @@ suffix:
 
 # base location
 path:
-  base: D:\Coding\mb-code-generator-workspace\mb-code-generator-demo\src\main
+  base: /Users/yule/Coding/mb-code-generator-workspace/mb-code-generator-demo/src/main
 
 # package name / directory name
 package:
@@ -38,6 +38,8 @@ package:
   po: entity.po
   vo: entity.vo
   param: entity.query
+  utils: utils
+
 
 comment:
   author: maimai

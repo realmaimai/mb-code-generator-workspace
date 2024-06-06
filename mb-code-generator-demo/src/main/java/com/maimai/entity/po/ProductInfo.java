@@ -5,14 +5,13 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * @Description: Product Information Table
  *
  * @Author: maimai
- * @Date: 2024/06/03
+ * @Date: 2024/06/05
  */
 public class ProductInfo implements Serializable {
 	/**
@@ -75,6 +74,11 @@ public class ProductInfo implements Serializable {
 	 */
 	@JsonIgnore
 	private Integer status;
+
+	/**
+	 * 0: normal, 1: deleted
+	 */
+	private Integer isDel;
 
 	public Integer getId(){
 		return this.id;
@@ -162,6 +166,14 @@ public class ProductInfo implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getIsDel(){
+		return this.isDel;
+	}
+
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
 	}
 
 }
