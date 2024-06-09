@@ -104,12 +104,12 @@ public class Constants {
 
             PATH_BASE = PropertiesUtils.getString("path","base") + "/" + PATH_JAVA + "/" + PACKAGE_BASE.replace('.','/') + "/";
             PATH_PO = PATH_BASE + PropertiesUtils.getString("package", "po").replace('.','/') + "/";
-            PATH_VO = PATH_BASE + "/" + PropertiesUtils.getString("package", "vo").replace('.','/') + "/";
-//            PATH_QUERY = PATH_BASE + "/" + PropertiesUtils.getString("package","query").replace('.','/') + "/";
-            PATH_UTILS = PATH_BASE + "/" + PropertiesUtils.getString("package","utils").replace('.','/') + "/";
-//            PATH_ENUMS = PATH_BASE + "/" + PropertiesUtils.getString("package","enums").replace('.','/') + "/";
-//            PATH_MAPPERS = PATH_BASE + "/" + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
-//            PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") + "/" + PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
+            PATH_VO = PATH_BASE +  PropertiesUtils.getString("package", "vo").replace('.','/') + "/";
+//            PATH_QUERY = PATH_BASE +  PropertiesUtils.getString("package","query").replace('.','/') + "/";
+            PATH_UTILS = PATH_BASE +  PropertiesUtils.getString("package","utils").replace('.','/') + "/";
+            PATH_ENUMS = PATH_BASE +  PropertiesUtils.getString("package","enums").replace('.','/') + "/";
+//            PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
+//            PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
 //            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
 //            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;
 //            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
