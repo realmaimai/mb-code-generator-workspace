@@ -33,6 +33,8 @@ public class BuildQuery {
             bufferedWriter.write("package " + Constants.PACKAGE_QUERY + ";");
             bufferedWriter.newLine();
             bufferedWriter.newLine();
+            bufferedWriter.write("import lombok.Data;");
+            bufferedWriter.newLine();
 
             if (tableInfo.isHaveBigDecimal()) {
                 bufferedWriter.write("import java.math.BigDecimal;");
@@ -45,6 +47,9 @@ public class BuildQuery {
             bufferedWriter.newLine();
 
             BuildComment.createClassComment(bufferedWriter, tableInfo.getComment());
+            // add lombok
+            bufferedWriter.write("@Data");
+            bufferedWriter.newLine();
             bufferedWriter.write("public class " + className + "{");
             bufferedWriter.newLine();
 
@@ -58,31 +63,18 @@ public class BuildQuery {
                 bufferedWriter.newLine();
                 if (ArrayUtils.contains(Constants.SQL_STRING_TYPE, fieldInfo.getSqlType())) {
                     bufferedWriter.write(("\tprivate " + fieldInfo.getJavaType() + " " + fieldInfo.getPropertyName() + Constants.SUFFIX_BEAN_FUZZY + ";"));
+                    bufferedWriter.newLine();
+                    bufferedWriter.newLine();
+                }
+                if (ArrayUtils.contains(Constants.SQL_DATE_TYPES, fieldInfo.getSqlType()) || ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES, fieldInfo.getSqlType()) ) {
+                    bufferedWriter.write(("\tprivate String " + fieldInfo.getPropertyName() + Constants.SUFFIX_BEAN_TIME_START+ ";"));
+                    bufferedWriter.newLine();
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(("\tprivate String " + fieldInfo.getPropertyName() + Constants.SUFFIX_BEAN_TIME_END+ ";"));
+                    bufferedWriter.newLine();
+                    bufferedWriter.newLine();
                 }
             }
-
-            // getter setter methods
-            for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
-                String upperFieldName = StringUtils.firstLetterUpperCase(fieldInfo.getPropertyName());
-                // getter
-                bufferedWriter.write("\tpublic " + fieldInfo.getJavaType() + " get" + upperFieldName + "()" + "{");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t\treturn this." + fieldInfo.getPropertyName() + ";");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t}");
-                bufferedWriter.newLine();
-                bufferedWriter.newLine();
-
-                // setter
-                bufferedWriter.write("\tpublic void set" + upperFieldName + "(" + fieldInfo.getJavaType() + " " + fieldInfo.getPropertyName() + ") {");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t\tthis." + fieldInfo.getPropertyName()+ " = " + fieldInfo.getPropertyName() + ";");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t}");
-                bufferedWriter.newLine();
-                bufferedWriter.newLine();
-            }
-
 
             bufferedWriter.write("}");
             bufferedWriter.flush();

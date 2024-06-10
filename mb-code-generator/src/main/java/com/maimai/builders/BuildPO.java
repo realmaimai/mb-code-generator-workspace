@@ -32,6 +32,8 @@ public class BuildPO {
             bufferedWriter.write("package " + Constants.PACKAGE_PO + ";");
             bufferedWriter.newLine();
             bufferedWriter.newLine();
+            bufferedWriter.write("import lombok.Data;");
+            bufferedWriter.newLine();
 
             if (tableInfo.isHaveBigDecimal()) {
                 bufferedWriter.write("import java.math.BigDecimal;");
@@ -63,7 +65,9 @@ public class BuildPO {
             bufferedWriter.newLine();
 
             BuildComment.createClassComment(bufferedWriter, tableInfo.getComment());
-
+            // add lombok
+            bufferedWriter.write("@Data");
+            bufferedWriter.newLine();
             bufferedWriter.write("public class " + tableInfo.getBeanName() + " implements Serializable {");
             bufferedWriter.newLine();
 
@@ -95,29 +99,6 @@ public class BuildPO {
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
             }
-
-            // getter setter methods
-            for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
-                String upperFieldName = StringUtils.firstLetterUpperCase(fieldInfo.getPropertyName());
-                // getter
-                bufferedWriter.write("\tpublic " + fieldInfo.getJavaType() + " get" + upperFieldName + "()" + "{");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t\treturn this." + fieldInfo.getPropertyName() + ";");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t}");
-                bufferedWriter.newLine();
-                bufferedWriter.newLine();
-
-                // setter
-                bufferedWriter.write("\tpublic void set" + upperFieldName + "(" + fieldInfo.getJavaType() + " " + fieldInfo.getPropertyName() + ") {");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t\tthis." + fieldInfo.getPropertyName()+ " = " + fieldInfo.getPropertyName() + ";");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t}");
-                bufferedWriter.newLine();
-                bufferedWriter.newLine();
-            }
-
 
             bufferedWriter.write("}");
             bufferedWriter.flush();

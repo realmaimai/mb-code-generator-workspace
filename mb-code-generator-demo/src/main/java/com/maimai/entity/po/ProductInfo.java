@@ -1,5 +1,6 @@
 package com.maimai.entity.po;
 
+import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @Author: maimai
  * @Date: 20240610
  */
+@Data
 public class ProductInfo implements Serializable {
 	/**
 	 * ID
@@ -74,93 +76,5 @@ public class ProductInfo implements Serializable {
 	 */
 	@JsonIgnore
 	private Integer status;
-
-	public Integer getId(){
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getCompanyId(){
-		return this.companyId;
-	}
-
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
-	}
-
-	public String getCode(){
-		return this.code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getProductName(){
-		return this.productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public BigDecimal getPrice(){
-		return this.price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public Integer getSkuType(){
-		return this.skuType;
-	}
-
-	public void setSkuType(Integer skuType) {
-		this.skuType = skuType;
-	}
-
-	public Integer getColorType(){
-		return this.colorType;
-	}
-
-	public void setColorType(Integer colorType) {
-		this.colorType = colorType;
-	}
-
-	public Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getCreateDate(){
-		return this.createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Long getStock(){
-		return this.stock;
-	}
-
-	public void setStock(Long stock) {
-		this.stock = stock;
-	}
-
-	public Integer getStatus(){
-		return this.status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 
 }

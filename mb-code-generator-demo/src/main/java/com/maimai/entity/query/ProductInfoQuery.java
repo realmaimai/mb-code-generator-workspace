@@ -1,5 +1,6 @@
 package com.maimai.entity.query;
 
+import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import java.util.Date;
  * @Author: maimai
  * @Date: 20240610
  */
+@Data
 public class ProductInfoQuery{
 	/**
 	 * ID
@@ -20,17 +22,23 @@ public class ProductInfoQuery{
 	 */
 	private String companyId;
 
-	private String companyIdFuzzy;	/**
+	private String companyIdFuzzy;
+
+	/**
 	 * Code
 	 */
 	private String code;
 
-	private String codeFuzzy;	/**
+	private String codeFuzzy;
+
+	/**
 	 * Product Name
 	 */
 	private String productName;
 
-	private String productNameFuzzy;	/**
+	private String productNameFuzzy;
+
+	/**
 	 * Price
 	 */
 	private BigDecimal price;
@@ -50,10 +58,18 @@ public class ProductInfoQuery{
 	 */
 	private Date createTime;
 
+	private String createTimeStart;
+
+	private String createTimeEnd;
+
 	/**
 	 * Create Date
 	 */
 	private Date createDate;
+
+	private String createDateStart;
+
+	private String createDateEnd;
 
 	/**
 	 * Stock
@@ -64,93 +80,5 @@ public class ProductInfoQuery{
 	 * Status
 	 */
 	private Integer status;
-
-	public Integer getId(){
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getCompanyId(){
-		return this.companyId;
-	}
-
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
-	}
-
-	public String getCode(){
-		return this.code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getProductName(){
-		return this.productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public BigDecimal getPrice(){
-		return this.price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public Integer getSkuType(){
-		return this.skuType;
-	}
-
-	public void setSkuType(Integer skuType) {
-		this.skuType = skuType;
-	}
-
-	public Integer getColorType(){
-		return this.colorType;
-	}
-
-	public void setColorType(Integer colorType) {
-		this.colorType = colorType;
-	}
-
-	public Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getCreateDate(){
-		return this.createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Long getStock(){
-		return this.stock;
-	}
-
-	public void setStock(Long stock) {
-		this.stock = stock;
-	}
-
-	public Integer getStatus(){
-		return this.status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 
 }
