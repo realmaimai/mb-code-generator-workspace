@@ -1,8 +1,12 @@
-package com.maimai.entity.query;
+package com.maimai.entities.po;
 
 import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @Description: Product Information Table
@@ -11,7 +15,7 @@ import java.util.Date;
  * @Date: 20240610
  */
 @Data
-public class ProductInfoQuery{
+public class ProductInfo implements Serializable {
 	/**
 	 * ID
 	 */
@@ -20,23 +24,18 @@ public class ProductInfoQuery{
 	/**
 	 * Company ID
 	 */
+	@JsonIgnore
 	private String companyId;
-
-	private String companyIdFuzzy;
 
 	/**
 	 * Code
 	 */
 	private String code;
 
-	private String codeFuzzy;
-
 	/**
 	 * Product Name
 	 */
 	private String productName;
-
-	private String productNameFuzzy;
 
 	/**
 	 * Price
@@ -56,20 +55,16 @@ public class ProductInfoQuery{
 	/**
 	 * Create Time
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+2")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
-
-	private String createTimeStart;
-
-	private String createTimeEnd;
 
 	/**
 	 * Create Date
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+2")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createDate;
-
-	private String createDateStart;
-
-	private String createDateEnd;
 
 	/**
 	 * Stock
@@ -79,6 +74,7 @@ public class ProductInfoQuery{
 	/**
 	 * Status
 	 */
+	@JsonIgnore
 	private Integer status;
 
 }

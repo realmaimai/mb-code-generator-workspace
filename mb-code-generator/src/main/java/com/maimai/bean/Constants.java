@@ -86,7 +86,7 @@ public class Constants {
             SUFFIX_BEAN_FUZZY = PropertiesUtils.getString("suffix", "bean", "param", "fuzzy");
             SUFFIX_BEAN_TIME_START = PropertiesUtils.getString("suffix","bean","time","start");
             SUFFIX_BEAN_TIME_END = PropertiesUtils.getString("suffix", "bean","time","end");
-            SUFFIX_MAPPERS = PropertiesUtils.getString("suffix", "mappers");
+            SUFFIX_MAPPERS = PropertiesUtils.getString("suffix", "mapper");
 
 
             PACKAGE_BASE = PropertiesUtils.getString("package", "base");
@@ -108,7 +108,7 @@ public class Constants {
             PATH_QUERY = PATH_BASE +  PropertiesUtils.getString("package","query").replace('.','/') + "/";
             PATH_UTILS = PATH_BASE +  PropertiesUtils.getString("package","utils").replace('.','/') + "/";
             PATH_ENUMS = PATH_BASE +  PropertiesUtils.getString("package","enums").replace('.','/') + "/";
-//            PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
+            PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
 //            PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
 //            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
 //            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;

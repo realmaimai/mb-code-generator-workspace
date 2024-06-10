@@ -10,22 +10,21 @@ public class BuildBaseClass {
     public static void execute() {
         List<String> headerInfo  = new ArrayList<>();
 
+        // generate enums template
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_ENUMS + ";");
-//        生成date枚举
         build(headerInfo, "DateTimePatternEnum", Constants.PATH_ENUMS);
-//        生成ResponseCodeEnum枚举
-//        build(headerInfo, "ResponseCodeEnum", Constants.PATH_ENUMS);
+
+        // generate date utils template
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_UTILS + ";");
-        // generate date utils
         build(headerInfo, "DateUtils", Constants.PATH_UTILS);
-//
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_MAPPERS + ";");
-////        生成baseMapper
-//        build(headerInfo, "BaseMapper", Constants.PATH_MAPPERS);
-//
+
+        // generate base mapper
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_MAPPERS + ";");
+        build(headerInfo, "BaseMapper", Constants.PATH_MAPPERS);
+
 //        headerInfo.clear();
 //        headerInfo.add("package " + Constants.PACKAGE_EXCEPTION + ";");
 //        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");

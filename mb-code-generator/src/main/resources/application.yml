@@ -31,6 +31,7 @@ suffix:
     time:
       start: Start
       end: End
+  mapper: Mapper
 
 # base location
 path:
@@ -40,11 +41,12 @@ path:
 # package name / directory name
 package:
   base: com.maimai
-  po: entity.po
-  vo: entity.vo
-  query: entity.query
+  po: entities.po
+  vo: entities.vo
+  query: entities.query
   utils: utils
   enums: enums
+  mappers: mappers
 
 
 comment:

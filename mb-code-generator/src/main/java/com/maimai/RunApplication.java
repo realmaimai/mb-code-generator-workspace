@@ -1,10 +1,7 @@
 package com.maimai;
 
 import com.maimai.bean.TableInfo;
-import com.maimai.builders.BuildBaseClass;
-import com.maimai.builders.BuildPO;
-import com.maimai.builders.BuildQuery;
-import com.maimai.builders.BuildTable;
+import com.maimai.builders.*;
 
 import java.util.List;
 
@@ -18,6 +15,8 @@ public class RunApplication {
             BuildPO.execute(tableInfo);
 
             BuildQuery.execute(tableInfo);
+
+            BuildMapper.execute(tableInfo);
         }
     }
 }
