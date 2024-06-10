@@ -14,10 +14,10 @@ public class Constants {
     // if we want to ignore the prefix
     // when the table is started with "tb_" like "tb_order_info"
     public static boolean IGNORE_TABLE_PREFIX;
-    public static String SUFFIX_BEAN_PARAM;
-    public static String SUFFIX_BEAN_QUERY_FUZZY;
-    public static String SUFFIX_BEAN_QUERY_TIME_START;
-    public static String SUFFIX_BEAN_QUERY_TIME_END;
+    public static String SUFFIX_BEAN_QUERY;
+    public static String SUFFIX_BEAN_FUZZY;
+    public static String SUFFIX_BEAN_TIME_START;
+    public static String SUFFIX_BEAN_TIME_END;
     public static String SUFFIX_MAPPERS;
     public static String PATH_BASE;
 
@@ -82,11 +82,11 @@ public class Constants {
         try {
             COMMENT_AUTHOR =  PropertiesUtils.getString("comment", "author");
             IGNORE_TABLE_PREFIX = Boolean.parseBoolean(PropertiesUtils.getString("ignore", "table", "prefix"));
-            SUFFIX_BEAN_PARAM= PropertiesUtils.getString("suffix", "bean", "param");
-            SUFFIX_BEAN_QUERY_FUZZY = PropertiesUtils.getString("suffix", "bean", "param", "fuzzy");
-            SUFFIX_BEAN_QUERY_TIME_START = PropertiesUtils.getString("suffix.bean.query.time.start");
-            SUFFIX_BEAN_QUERY_TIME_END = PropertiesUtils.getString("suffix.bean.query.time.end");
-            SUFFIX_MAPPERS = PropertiesUtils.getString("suffix.mappers");
+            SUFFIX_BEAN_QUERY= PropertiesUtils.getString("suffix", "bean", "query");
+            SUFFIX_BEAN_FUZZY = PropertiesUtils.getString("suffix", "bean", "param", "fuzzy");
+            SUFFIX_BEAN_TIME_START = PropertiesUtils.getString("suffix","bean","time","start");
+            SUFFIX_BEAN_TIME_END = PropertiesUtils.getString("suffix", "bean","time","end");
+            SUFFIX_MAPPERS = PropertiesUtils.getString("suffix", "mappers");
 
 
             PACKAGE_BASE = PropertiesUtils.getString("package", "base");
@@ -105,7 +105,7 @@ public class Constants {
             PATH_BASE = PropertiesUtils.getString("path","base") + "/" + PATH_JAVA + "/" + PACKAGE_BASE.replace('.','/') + "/";
             PATH_PO = PATH_BASE + PropertiesUtils.getString("package", "po").replace('.','/') + "/";
             PATH_VO = PATH_BASE +  PropertiesUtils.getString("package", "vo").replace('.','/') + "/";
-//            PATH_QUERY = PATH_BASE +  PropertiesUtils.getString("package","query").replace('.','/') + "/";
+            PATH_QUERY = PATH_BASE +  PropertiesUtils.getString("package","query").replace('.','/') + "/";
             PATH_UTILS = PATH_BASE +  PropertiesUtils.getString("package","utils").replace('.','/') + "/";
             PATH_ENUMS = PATH_BASE +  PropertiesUtils.getString("package","enums").replace('.','/') + "/";
 //            PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";

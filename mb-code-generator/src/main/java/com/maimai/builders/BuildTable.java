@@ -12,7 +12,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.sql.*;
 import java.util.*;
 
-// TODO change this class to DatabaseUtils
 @Slf4j
 public class BuildTable {
     private static Connection connection = null;
@@ -57,7 +56,7 @@ public class BuildTable {
                 tableInfo.setTableName(tableName);
                 tableInfo.setComment(comment);
                 tableInfo.setBeanName(beanName);
-                tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_PARAM);
+                tableInfo.setBeanParamName(beanName + Constants.SUFFIX_BEAN_QUERY);
                 readFieldInfo(tableInfo);
                 getKeyIndexInfo(tableInfo);
                 log.info("table info: " + JsonUtils.convertObj2Json(tableInfo));
@@ -221,7 +220,7 @@ public class BuildTable {
     private static String processField(String field, Boolean firstLetterUpperCase) {
         StringBuffer sb = new StringBuffer();
         String[] split = field.split("_");
-        // first sub split value if need to uppercase
+        // first sub split value if you need to uppercase
         sb.append(firstLetterUpperCase? StringUtils.firstLetterUpperCase(split[0]) : split[0]);
         for (int i=1; i<split.length;i++) {
             String s = StringUtils.firstLetterUpperCase(split[i]);

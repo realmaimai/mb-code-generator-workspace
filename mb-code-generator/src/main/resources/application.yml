@@ -26,7 +26,10 @@ bean:
 
 suffix:
   bean:
-    param: Query
+    query: Query
+    fuzzy: Fuzzy
+    time.start: Start
+    time.end: End
 
 # base location
 path:
