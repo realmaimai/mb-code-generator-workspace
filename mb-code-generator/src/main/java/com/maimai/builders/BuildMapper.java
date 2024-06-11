@@ -79,12 +79,12 @@ public class BuildMapper {
                 bufferedWriter.newLine();
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to update data");
-                bufferedWriter.write("\t T updateBy" + methodName + "();");
+                bufferedWriter.write("\t T updateBy" + methodName + "(" + methodParams+ ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to delete data");
-                bufferedWriter.write("\t T deleteBy" + methodName + "();");
+                bufferedWriter.write("\t T deleteBy" + methodName + "(" + methodParams+ ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
             }

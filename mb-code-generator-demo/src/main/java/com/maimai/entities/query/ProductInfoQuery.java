@@ -8,7 +8,7 @@ import java.util.Date;
  * @Description: Product Information Table
  *
  * @Author: maimai
- * @Date: 20240610
+ * @Date: 20240611
  */
 @Data
 public class ProductInfoQuery{
