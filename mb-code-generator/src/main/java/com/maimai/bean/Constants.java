@@ -61,7 +61,7 @@ public class Constants {
     public static String PACKAGE_CONTROLLER;
     public static String PATH_EXCEPTION;
     public static String PACKAGE_EXCEPTION;
-    public static String PATH_MAPPERS_MXLS;
+    public static String PATH_MAPPERS_XMLS;
     public static String IGNORE_BEAN_TOJSON_FIELD;
     public static String IGNORE_BEAN_TOJSON_EXPRESSION;
     public static String IGNORE_BEAN_TOJSON_CLASS;
@@ -109,7 +109,7 @@ public class Constants {
             PATH_UTILS = PATH_BASE +  PropertiesUtils.getString("package","utils").replace('.','/') + "/";
             PATH_ENUMS = PATH_BASE +  PropertiesUtils.getString("package","enums").replace('.','/') + "/";
             PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
-//            PATH_MAPPERS_MXLS = PropertiesUtils.getString("path.base") +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
+            PATH_MAPPERS_XMLS = PropertiesUtils.getString("path","base") + "/" +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
 //            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
 //            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;
 //            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
@@ -131,12 +131,7 @@ public class Constants {
 
     }
     public static void main(String[] args) {
-        System.out.println(PATH_PO);
-        System.out.println(PACKAGE_BASE);
         System.out.println(PATH_BASE);
-        System.out.println(BEAN_DATE_FORMAT_SERIALIZATION);
-        System.out.println(BEAN_DATE_FORMAT_SERIALIZATION_CLASS);
-        System.out.println(IGNORE_BEAN_TOJSON_FIELD);
-        System.out.println(IGNORE_TABLE_PREFIX);
+        System.out.println(PATH_MAPPERS_XMLS);
     }
 }
