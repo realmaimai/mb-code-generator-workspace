@@ -119,7 +119,13 @@ public class BuildMapperXML {
             bufferedWriter.write("\t</sql>");
             bufferedWriter.newLine();
 
-
+            // select expression
+            bufferedWriter.write("\t<select id=\"selectList\" resultMap=\"base_result_map\">");
+            bufferedWriter.newLine();
+            bufferedWriter.write("\t\tSELECT <include refid=\"" + BASE_COLUMN_LIST + "\"/> FROM " + tableInfo.getTableName() + " <include refid=\"" + QUERY_CONDITION + "\"/>");
+            bufferedWriter.newLine();
+            bufferedWriter.write("\t</select>");
+            bufferedWriter.newLine();
 
             // end mapper tag
             bufferedWriter.write("</mapper>");

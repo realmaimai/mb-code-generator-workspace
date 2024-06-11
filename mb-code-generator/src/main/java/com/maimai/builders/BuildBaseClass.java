@@ -10,17 +10,17 @@ public class BuildBaseClass {
     public static void execute() {
         List<String> headerInfo  = new ArrayList<>();
 
-        // generate enums template
+        // create enums template
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_ENUMS + ";");
         build(headerInfo, "DateTimePatternEnum", Constants.PATH_ENUMS);
 
-        // generate date utils template
+        // create date utils template
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_UTILS + ";");
         build(headerInfo, "DateUtils", Constants.PATH_UTILS);
 
-        // generate base mapper
+        // create base mapper
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_MAPPERS + ";");
         build(headerInfo, "BaseMapper", Constants.PATH_MAPPERS);
@@ -31,17 +31,17 @@ public class BuildBaseClass {
 ////        生成businessException
 //        build(headerInfo, "BusinessException", Constants.PATH_EXCEPTION);
 //
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_ENUMS + ";");
-////        生成pagesize枚举
-//        build(headerInfo, "PageSize", Constants.PATH_ENUMS);
-//
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_QUERY + ";");
-//        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".PageSize;");
-////        生成分页信息
-//        build(headerInfo, "SimplePage", Constants.PATH_QUERY);
-//
+        // create page size enums file
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_ENUMS + ";");
+        build(headerInfo, "PageSize", Constants.PATH_ENUMS);
+
+        // create Paginator file
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_QUERY + ";");
+        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".PageSize;");
+        build(headerInfo, "Paginator", Constants.PATH_QUERY);
+
 //        headerInfo.clear();
 //        headerInfo.add("package " + Constants.PACKAGE_CONTROLLER + ";");
 //        headerInfo.add("import " + Constants.PACKAGE_VO + ".ResponseVO;");

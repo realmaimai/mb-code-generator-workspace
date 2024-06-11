@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @Description: Product Information Table
  *
  * @Author: maimai
- * @Date: 20240611
+ * @Date: 20240612
  */
 @Data
 public class ProductInfo implements Serializable {

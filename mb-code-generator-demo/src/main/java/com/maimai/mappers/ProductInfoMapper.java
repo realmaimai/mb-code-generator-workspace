@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
  * @Description: Product Information Table
  *
  * @Author: maimai
- * @Date: 20240611
+ * @Date: 20240612
  */
 public interface ProductInfoMapper<T, P> extends BaseMapper {
 	/**

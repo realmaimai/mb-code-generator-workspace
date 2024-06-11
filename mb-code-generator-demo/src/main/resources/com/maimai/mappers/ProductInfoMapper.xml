@@ -67,4 +67,7 @@
 			and status = #{query.status}
 		</if>
 	</sql>
+	<select id="selectList" resultMap="base_result_map">
+		SELECT <include refid="base_column_list"/> FROM tb_product_info <include refid="query_condition"/>
+	</select>
 </mapper>
