@@ -57,10 +57,10 @@ public class BuildBaseClass {
 ////        生成AGlobalExceptionHandlerController
 //        build(headerInfo, "AGlobalExceptionHandlerController", Constants.PATH_CONTROLLER);
 //
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_QUERY + ";");
-////        生成BaseQuery
-//        build(headerInfo , "BaseQuery", Constants.PATH_QUERY);
+        // create BaseQuery file
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_QUERY + ";");
+        build(headerInfo , "BaseQuery", Constants.PATH_QUERY);
 //
 //        headerInfo.clear();
 //        headerInfo.add("package " + Constants.PACKAGE_VO + ";");

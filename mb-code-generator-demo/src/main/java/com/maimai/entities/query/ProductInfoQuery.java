@@ -11,7 +11,7 @@ import java.util.Date;
  * @Date: 20240612
  */
 @Data
-public class ProductInfoQuery{
+public class ProductInfoQuery extends BaseQuery {
 	/**
 	 * ID
 	 */

@@ -137,8 +137,36 @@ public class BuildTable {
 
                 fieldInfoList.add(fieldInfo);
                 tableInfo.setFieldInfoList(fieldInfoList);
-
             }
+
+            // add extend list into table info
+            List<FieldInfo> extendList = new ArrayList<>();
+            for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
+                if(ArrayUtils.contains(Constants.SQL_STRING_TYPE,fieldInfo.getSqlType())){
+                    FieldInfo field = new FieldInfo();
+                    field.setJavaType(fieldInfo.getJavaType());
+                    field.setPropertyName(fieldInfo.getPropertyName()+Constants.SUFFIX_BEAN_FUZZY);
+                    field.setFieldName(fieldInfo.getFieldName());
+                    field.setSqlType(fieldInfo.getSqlType());
+                    extendList.add(field);
+
+                }
+                if(ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES,fieldInfo.getSqlType())||ArrayUtils.contains(Constants.SQL_DATE_TYPES,fieldInfo.getSqlType())){
+                    FieldInfo field = new FieldInfo();
+                    field.setJavaType("String");
+                    field.setPropertyName(fieldInfo.getPropertyName()+Constants.SUFFIX_BEAN_TIME_START);
+                    field.setFieldName(fieldInfo.getFieldName());
+                    field.setSqlType(fieldInfo.getSqlType());
+                    extendList.add(field);
+                    field = new FieldInfo();
+                    field.setJavaType("String");
+                    field.setPropertyName(fieldInfo.getPropertyName()+Constants.SUFFIX_BEAN_TIME_END);
+                    field.setFieldName(fieldInfo.getFieldName());
+                    field.setSqlType(fieldInfo.getSqlType());
+                    extendList.add(field);
+                }
+            }
+            tableInfo.setExtendFieldInfoList(extendList);
 
         } catch (Exception e) {
             log.info("get field information from connection error: " + e);

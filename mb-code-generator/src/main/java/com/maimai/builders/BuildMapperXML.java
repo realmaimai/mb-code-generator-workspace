@@ -19,6 +19,7 @@ public class BuildMapperXML {
 
     private static final String BASE_COLUMN_LIST = "base_column_list";
     private static final String BASE_QUERY_CONDITION = "base_query_condition";
+    private static final String BASE_QUERY_CONDITION_EXTEND = "base_query_condition_extend";
     private static final String QUERY_CONDITION = "query_condition";
 
     public static void execute(TableInfo tableInfo) {
@@ -26,40 +27,39 @@ public class BuildMapperXML {
         if (!folder.exists()) {
             folder.mkdirs();
         }
+
         String className = tableInfo.getBeanName() + Constants.SUFFIX_MAPPERS;
+
         File poFile = new File(folder, className + ".xml");
 
         OutputStream out = null;
-        OutputStreamWriter outputStreamWriter = null;
-        BufferedWriter bufferedWriter = null;
+        OutputStreamWriter outw = null;
+        BufferedWriter bw = null;
         try {
-            out = Files.newOutputStream(poFile.toPath());
-            outputStreamWriter = new OutputStreamWriter(out);
-            bufferedWriter = new BufferedWriter(outputStreamWriter);
+            out = new FileOutputStream(poFile);
+            outw = new OutputStreamWriter(out, "utf-8");
+            bw = new BufferedWriter(outw);
 
-            // generate xml header
-            bufferedWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-            bufferedWriter.newLine();
-            bufferedWriter.write("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"");
-            bufferedWriter.newLine();
-            bufferedWriter.write("        \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
-            bufferedWriter.newLine();
-            bufferedWriter.write("<mapper namespace=\"" + Constants.PACKAGE_MAPPERS + "." + className + "\">");
-            bufferedWriter.newLine();
-
-            // generate entity mapping
-            bufferedWriter.write("\t<!-- entity mapping -->");
-            bufferedWriter.newLine();
-            String poClass = Constants.PACKAGE_PO + "." + tableInfo.getBeanName();
-            bufferedWriter.write("\t<resultMap id=\"base_result_map\" type=\"" + poClass + "\">");
-            bufferedWriter.newLine();
+            bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+            bw.newLine();
+            bw.write("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"");
+            bw.newLine();
+            bw.write("        \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
+            bw.newLine();
+            bw.write("<mapper namespace=\""+Constants.PACKAGE_MAPPERS + "." + className +"\">");
+            bw.newLine();
+            bw.write("\t<!-- entity mapping -->");
+            bw.newLine();
+            String poClass = Constants.PACKAGE_PO + "." +tableInfo.getBeanName();
+            bw.write("\t<resultMap id=\"base_result_map\" type=\""+poClass+"\">");
+            bw.newLine();
 
             FieldInfo idField = null;
-            Map<String, List<FieldInfo>> keyIndexMap = tableInfo.getKeyIndexMap();
-            for (Map.Entry<String, List<FieldInfo>> entry : keyIndexMap.entrySet()) {
-                if ("PRIMARY".equals(entry.getKey())) {
+            Set<Map.Entry<String, List<FieldInfo>>> keyIndexMap = tableInfo.getKeyIndexMap().entrySet();
+            for (Map.Entry<String, List<FieldInfo>> entry : keyIndexMap) {
+                if("PRIMARY".equals(entry.getKey())){
                     List<FieldInfo> fieldInfoList = entry.getValue();
-                    if (fieldInfoList.size() == 1) {
+                    if(fieldInfoList.size()==1){
                         idField = fieldInfoList.get(0);
                         break;
                     }
@@ -67,83 +67,148 @@ public class BuildMapperXML {
             }
 
             for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
-                bufferedWriter.write("\t\t<!-- " + fieldInfo.getComment() + " -->");
-                bufferedWriter.newLine();
-                String key;
-                if (idField != null && fieldInfo.getPropertyName().equals(idField.getPropertyName())) {
+                bw.write("\t<!--"+fieldInfo.getComment()+"-->");
+                bw.newLine();
+                // primary key id
+                String key = "";
+                if(idField!=null && fieldInfo.getPropertyName().equals(idField.getPropertyName())){
                     key = "id";
-                } else {
+                }
+                else{
                     key = "result";
                 }
-                bufferedWriter.write("\t\t<" + key + " column=\"" + fieldInfo.getFieldName() + "\" property=\"" + fieldInfo.getPropertyName() + "\"/>");
-                bufferedWriter.newLine();
+                bw.write("\t\t<"+key+" column=\""+fieldInfo.getFieldName()+"\" property=\""+fieldInfo.getPropertyName()+"\"/>");
+                bw.newLine();
             }
 
-            bufferedWriter.write("\t</resultMap>");
-            bufferedWriter.newLine();
-            bufferedWriter.newLine();
+            bw.write("\t</resultMap>");
+            bw.newLine();
+            bw.newLine();
 
-            // base sql query:
-            // base column list
-            bufferedWriter.write("\t<sql id=\"" + BASE_COLUMN_LIST + "\">");
-            bufferedWriter.newLine();
-            bufferedWriter.write("\t\t");
+            bw.write("\t<!-- base column list -->");
+            bw.newLine();
+            bw.write("\t<sql id=\""+BASE_COLUMN_LIST+"\">");
+            bw.newLine();
             StringBuilder columnBuilder = new StringBuilder();
             for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
-                columnBuilder.append(fieldInfo.getFieldName()).append(", ");
+                columnBuilder.append(fieldInfo.getFieldName()).append(",");
             }
-            columnBuilder = columnBuilder.deleteCharAt(columnBuilder.length() - 2);
-            bufferedWriter.write(String.valueOf(columnBuilder));
-            bufferedWriter.newLine();
-            bufferedWriter.write("\t</sql>");
-            bufferedWriter.newLine();
-            bufferedWriter.newLine();
+            String columnBuilderStr = columnBuilder.substring(0,columnBuilder.lastIndexOf(","));
+            bw.write("\t\t"+columnBuilderStr);
+            bw.newLine();
+            bw.write("\t</sql>");
+            bw.newLine();
+            bw.newLine();
 
-            // base query condition
-            bufferedWriter.write("\t<sql id=\"" + BASE_QUERY_CONDITION + "\">");
-            bufferedWriter.newLine();
-
+            bw.write("<!-- base conditional query -->");
+            bw.newLine();
+            bw.write("\t<sql id=\""+BASE_QUERY_CONDITION+"\">");
+            bw.newLine();
             for (FieldInfo fieldInfo : tableInfo.getFieldInfoList()) {
                 String stringQuery = "";
-                if (ArrayUtils.contains(Constants.SQL_STRING_TYPE, fieldInfo.getSqlType())) {
+                if(ArrayUtils.contains(Constants.SQL_STRING_TYPE,fieldInfo.getSqlType())){
                     stringQuery = " and query." + fieldInfo.getPropertyName() + " != ''";
                 }
-                bufferedWriter.write("\t\t<if test=\"query." + fieldInfo.getPropertyName() + " != null" + stringQuery + "\">");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t\t\tand " + fieldInfo.getPropertyName() + " = " + "#{query."+fieldInfo.getPropertyName()+"}");
-                bufferedWriter.newLine();
-                bufferedWriter.write("\t\t</if>");
-                bufferedWriter.newLine();
+
+                bw.write("\t\t<if test=\"query." + fieldInfo.getPropertyName() + " != null"+stringQuery+"\">");
+                bw.newLine();
+                bw.write("\t\t\tand " + fieldInfo.getFieldName() + " = #{query." + fieldInfo.getPropertyName() + "}");
+                bw.newLine();
+                bw.write("\t\t</if>");
+                bw.newLine();
             }
+            bw.write("\t</sql>");
+            bw.newLine();
+            bw.newLine();
 
-            bufferedWriter.write("\t</sql>");
-            bufferedWriter.newLine();
+            bw.write("<!-- base extended conditional query-->");
+            bw.newLine();
+            bw.write("\t<sql id=\""+BASE_QUERY_CONDITION_EXTEND+"\">");
+            bw.newLine();
+            for (FieldInfo fieldInfo : tableInfo.getExtendFieldInfoList()) {
+                String andWhere = "";
+                if(ArrayUtils.contains(Constants.SQL_STRING_TYPE,fieldInfo.getSqlType())){
+                    andWhere = "and "+ fieldInfo.getFieldName() + " like concat('%', #{query."+fieldInfo.getPropertyName()+"},'%')" + " != ''";
+                }else if(ArrayUtils.contains(Constants.SQL_DATE_TYPES,fieldInfo.getSqlType()) || ArrayUtils.contains(Constants.SQL_DATE_TIME_TYPES,fieldInfo.getSqlType())){
+                    if(fieldInfo.getPropertyName().endsWith(Constants.SUFFIX_BEAN_TIME_START)){
+                        andWhere = "<![CDATA[ and " + fieldInfo.getFieldName() + " >= str_to_date(#{query."+ fieldInfo.getPropertyName() + "}, '%Y-%m-%d') ]]>";
+                    }
+                    else if(fieldInfo.getPropertyName().endsWith(Constants.SUFFIX_BEAN_TIME_END)){
+                        andWhere = "<![CDATA[ and " + fieldInfo.getFieldName() + " < date_sub(str_to_date(#{query."+ fieldInfo.getPropertyName() + "}, '%Y-%m-%d'), interval -1 day) ]]>";
+                    }
+                }
 
-            // select expression
-            bufferedWriter.write("\t<select id=\"selectList\" resultMap=\"base_result_map\">");
-            bufferedWriter.newLine();
-            bufferedWriter.write("\t\tSELECT <include refid=\"" + BASE_COLUMN_LIST + "\"/> FROM " + tableInfo.getTableName() + " <include refid=\"" + QUERY_CONDITION + "\"/>");
-            bufferedWriter.newLine();
-            bufferedWriter.write("\t</select>");
-            bufferedWriter.newLine();
+                bw.write("\t\t<if test=\"query." + fieldInfo.getPropertyName() + " != null and query." + fieldInfo.getPropertyName() + " != ''\">");
+                bw.newLine();
+                bw.write("\t\t\t"+andWhere);
+                bw.newLine();
+                bw.write("\t\t</if>");
+                bw.newLine();
+            }
+            bw.write("\t</sql>");
+            bw.newLine();
+            bw.newLine();
+
+
+            bw.write("<!-- conditional query -->");
+            bw.newLine();
+            bw.write("\t<sql id=\""+QUERY_CONDITION+"\">");
+            bw.newLine();
+            bw.write("\t\t<where>");
+            bw.newLine();
+            bw.write("\t\t\t<include refid=\""+BASE_QUERY_CONDITION+"\"/>");
+            bw.newLine();
+            bw.write("\t\t\t<include refid=\""+BASE_QUERY_CONDITION_EXTEND+"\"/>");
+            bw.newLine();
+            bw.write("\t\t</where>");
+            bw.newLine();
+            bw.write("\t</sql>");
+            bw.newLine();
+            bw.newLine();
+
+            bw.write("<!-- select query -->");
+            bw.newLine();
+            bw.write("\t<select id=\"selectList\" resultMap=\"base_result_map\">");
+            bw.newLine();
+            bw.write("\t\tSELECT <include refid=\"" + BASE_COLUMN_LIST + "\"/> FROM " + tableInfo.getTableName() + " <include refid=\""+QUERY_CONDITION + "\"/>");
+            bw.newLine();
+            bw.write("\t\t<if test=\"query.orderBy!=null\"> order by ${query.orderBy} </if>");
+            bw.newLine();
+            bw.write("\t\t<if test=\"query.paginator!=null\"> limit ${query.paginator.start},${query.paginator.end} </if>");
+            bw.newLine();
+            bw.write("\t</select>");
+            bw.newLine();
+            bw.newLine();
+
+            bw.write("<!-- count query -->");
+            bw.newLine();
+            bw.write("\t<select id=\"selectCount\" resultType=\"java.lang.Long\">");
+            bw.newLine();
+            bw.write("\t\tselect count(1) FROM "+ tableInfo.getTableName());
+            bw.newLine();
+            bw.write("\t\t<include refid=\""+QUERY_CONDITION+"\"/>");
+            bw.newLine();
+            bw.write("\t</select>");
+            bw.newLine();
+            bw.newLine();
 
             // end mapper tag
-            bufferedWriter.write("</mapper>");
-            bufferedWriter.flush();
+            bw.write("</mapper>");
+            bw.flush();
 
         } catch (Exception e) {
             log.info("create mapper xml error: " + e);
         } finally {
-            if (Objects.isNull(bufferedWriter)) {
+            if (Objects.isNull(bw)) {
                 try {
-                    bufferedWriter.close();
+                    bw.close();
                 } catch (IOException e) {
                     log.info("buffered writer closing error: " + e);
                 }
             }
-            if (Objects.isNull(outputStreamWriter)) {
+            if (Objects.isNull(outw)) {
                 try {
-                    outputStreamWriter.close();
+                    outw.close();
                 } catch (IOException e) {
                     log.info("output stream writer closing error: " + e);
                 }

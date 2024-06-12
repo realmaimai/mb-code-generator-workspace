@@ -4,61 +4,63 @@
 <mapper namespace="com.maimai.mappers.ProductInfoMapper">
 	<!-- entity mapping -->
 	<resultMap id="base_result_map" type="com.maimai.entities.po.ProductInfo">
-		<!-- ID -->
+	<!--ID-->
 		<id column="id" property="id"/>
-		<!-- Company ID -->
+	<!--Company ID-->
 		<result column="company_id" property="companyId"/>
-		<!-- Code -->
+	<!--Code-->
 		<result column="code" property="code"/>
-		<!-- Product Name -->
+	<!--Product Name-->
 		<result column="product_name" property="productName"/>
-		<!-- Price -->
+	<!--Price-->
 		<result column="price" property="price"/>
-		<!-- SKU Type -->
+	<!--SKU Type-->
 		<result column="sku_type" property="skuType"/>
-		<!-- Color Type -->
+	<!--Color Type-->
 		<result column="color_type" property="colorType"/>
-		<!-- Create Time -->
+	<!--Create Time-->
 		<result column="create_time" property="createTime"/>
-		<!-- Create Date -->
+	<!--Create Date-->
 		<result column="create_date" property="createDate"/>
-		<!-- Stock -->
+	<!--Stock-->
 		<result column="stock" property="stock"/>
-		<!-- Status -->
+	<!--Status-->
 		<result column="status" property="status"/>
 	</resultMap>
 
+	<!-- base column list -->
 	<sql id="base_column_list">
-		id, company_id, code, product_name, price, sku_type, color_type, create_time, create_date, stock, status 
+		id,company_id,code,product_name,price,sku_type,color_type,create_time,create_date,stock,status
 	</sql>
 
+<!-- base conditional query -->
 	<sql id="base_query_condition">
 		<if test="query.id != null">
 			and id = #{query.id}
 		</if>
 		<if test="query.companyId != null and query.companyId != ''">
-			and companyId = #{query.companyId}
+			and company_id = #{query.companyId}
 		</if>
 		<if test="query.code != null and query.code != ''">
 			and code = #{query.code}
 		</if>
 		<if test="query.productName != null and query.productName != ''">
-			and productName = #{query.productName}
+			and product_name = #{query.productName}
 		</if>
 		<if test="query.price != null">
 			and price = #{query.price}
 		</if>
 		<if test="query.skuType != null">
-			and skuType = #{query.skuType}
+			and sku_type = #{query.skuType}
 		</if>
 		<if test="query.colorType != null">
-			and colorType = #{query.colorType}
+			and color_type = #{query.colorType}
 		</if>
 		<if test="query.createTime != null">
-			and createTime = #{query.createTime}
+			and create_time = #{query.createTime}
 		</if>
 		<if test="query.createDate != null">
-			and createDate = #{query.createDate}
+			and create_date = #{query.createDate}
 		</if>
 		<if test="query.stock != null">
 			and stock = #{query.stock}
@@ -67,7 +69,51 @@
 			and status = #{query.status}
 		</if>
 	</sql>
+
+<!-- base extended conditional query-->
+	<sql id="base_query_condition_extend">
+		<if test="query.companyIdFuzzy != null and query.companyIdFuzzy != ''">
+			and company_id like concat('%', #{query.companyIdFuzzy},'%') != ''
+		</if>
+		<if test="query.codeFuzzy != null and query.codeFuzzy != ''">
+			and code like concat('%', #{query.codeFuzzy},'%') != ''
+		</if>
+		<if test="query.productNameFuzzy != null and query.productNameFuzzy != ''">
+			and product_name like concat('%', #{query.productNameFuzzy},'%') != ''
+		</if>
+		<if test="query.createTimeStart != null and query.createTimeStart != ''">
+			<![CDATA[ and create_time >= str_to_date(#{query.createTimeStart}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="query.createTimeEnd != null and query.createTimeEnd != ''">
+			<![CDATA[ and create_time < date_sub(str_to_date(#{query.createTimeEnd}, '%Y-%m-%d'), interval -1 day) ]]>
+		</if>
+		<if test="query.createDateStart != null and query.createDateStart != ''">
+			<![CDATA[ and create_date >= str_to_date(#{query.createDateStart}, '%Y-%m-%d') ]]>
+		</if>
+		<if test="query.createDateEnd != null and query.createDateEnd != ''">
+			<![CDATA[ and create_date < date_sub(str_to_date(#{query.createDateEnd}, '%Y-%m-%d'), interval -1 day) ]]>
+		</if>
+	</sql>
+
+<!-- conditional query -->
+	<sql id="query_condition">
+		<where>
+			<include refid="base_query_condition"/>
+			<include refid="base_query_condition_extend"/>
+		</where>
+	</sql>
+
+<!-- select query -->
 	<select id="selectList" resultMap="base_result_map">
 		SELECT <include refid="base_column_list"/> FROM tb_product_info <include refid="query_condition"/>
+		<if test="query.orderBy!=null"> order by ${query.orderBy} </if>
+		<if test="query.paginator!=null"> limit ${query.paginator.start},${query.paginator.end} </if>
 	</select>
+
+<!-- count query -->
+	<select id="selectCount" resultType="java.lang.Long">
+		select count(1) FROM tb_product_info
+		<include refid="query_condition"/>
+	</select>
+
 </mapper>

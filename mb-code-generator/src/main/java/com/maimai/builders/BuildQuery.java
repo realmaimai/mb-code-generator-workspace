@@ -50,7 +50,7 @@ public class BuildQuery {
             // add lombok
             bufferedWriter.write("@Data");
             bufferedWriter.newLine();
-            bufferedWriter.write("public class " + className + "{");
+            bufferedWriter.write("public class " + className + " extends BaseQuery {");
             bufferedWriter.newLine();
 
             // loop field info list, set field in class

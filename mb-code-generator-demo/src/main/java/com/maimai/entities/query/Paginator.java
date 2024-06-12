@@ -1,3 +1,7 @@
+package com.maimai.entities.query;
+
+import com.maimai.enums.PageSize;
+
 public class Paginator {
     private Integer pageNo;
     private int countTotal;

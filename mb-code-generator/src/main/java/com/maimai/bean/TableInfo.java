@@ -10,16 +10,8 @@ public class TableInfo {
     private String beanParamName;
     private String comment;
     private List<FieldInfo> fieldInfoList;
-
-    public List<FieldInfo> getExtendFieldInfoList() {
-        return extendFieldInfoList;
-    }
-
-    public void setExtendFieldInfoList(List<FieldInfo> extendFieldInfoList) {
-        this.extendFieldInfoList = extendFieldInfoList;
-    }
-
     private List<FieldInfo> extendFieldInfoList;
+
     private Map<String, List<FieldInfo>> keyIndexMap = new LinkedHashMap<>();
     private boolean haveDate;
     private boolean haveDateTime;
@@ -96,5 +88,13 @@ public class TableInfo {
 
     public void setHaveBigDecimal(boolean haveBigDecimal) {
         this.haveBigDecimal = haveBigDecimal;
+    }
+
+    public List<FieldInfo> getExtendFieldInfoList() {
+        return extendFieldInfoList;
+    }
+
+    public void setExtendFieldInfoList(List<FieldInfo> extendFieldInfoList) {
+        this.extendFieldInfoList = extendFieldInfoList;
     }
 }
