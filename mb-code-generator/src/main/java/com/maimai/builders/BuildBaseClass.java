@@ -61,12 +61,13 @@ public class BuildBaseClass {
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_QUERY + ";");
         build(headerInfo , "BaseQuery", Constants.PATH_QUERY);
-//
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_VO + ";");
-////        生成PaginationResultVO
-//        build(headerInfo , "PaginationResultVO", Constants.PATH_VO);
-////        生成ResponseVO
+
+        // create VO file
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_VO + ";");
+        // paginationResultVO
+        build(headerInfo , "PaginationResultVO", Constants.PATH_VO);
+//        // responseVO
 //        build(headerInfo , "ResponseVO", Constants.PATH_VO);
     }
 

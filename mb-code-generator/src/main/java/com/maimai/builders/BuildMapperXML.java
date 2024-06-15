@@ -3,13 +3,13 @@ package com.maimai.builders;
 import com.maimai.bean.Constants;
 import com.maimai.bean.FieldInfo;
 import com.maimai.bean.TableInfo;
+import com.maimai.utils.ResourceUtils;
 import com.maimai.utils.StringUtils;
-import jdk.nashorn.internal.ir.CallNode;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -45,8 +45,8 @@ public class BuildMapperXML {
         OutputStreamWriter outw = null;
         BufferedWriter bw = null;
         try {
-            out = new FileOutputStream(poFile);
-            outw = new OutputStreamWriter(out, "utf-8");
+            out = Files.newOutputStream(poFile.toPath());
+            outw = new OutputStreamWriter(out, StandardCharsets.UTF_8);
             bw = new BufferedWriter(outw);
 
             bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
@@ -80,7 +80,7 @@ public class BuildMapperXML {
                 bw.write("\t<!--" + fieldInfo.getComment() + "-->");
                 bw.newLine();
                 // primary key id
-                String key = "";
+                String key;
                 if (idField != null && fieldInfo.getPropertyName().equals(idField.getPropertyName())) {
                     key = "id";
                 } else {
@@ -154,27 +154,7 @@ public class BuildMapperXML {
         } catch (Exception e) {
             log.info("create mapper xml error: " + e);
         } finally {
-            if (Objects.isNull(bw)) {
-                try {
-                    bw.close();
-                } catch (IOException e) {
-                    log.info("buffered writer closing error: " + e);
-                }
-            }
-            if (Objects.isNull(outw)) {
-                try {
-                    outw.close();
-                } catch (IOException e) {
-                    log.info("output stream writer closing error: " + e);
-                }
-            }
-            if (Objects.isNull(out)) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    log.info("output stream closing error: " + e);
-                }
-            }
+            ResourceUtils.closeQuietly(out, outw, bw, log);
         }
 
     }

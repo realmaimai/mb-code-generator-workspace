@@ -19,6 +19,8 @@ public class RunApplication {
             BuildMapper.execute(tableInfo);
 
             BuildMapperXML.execute(tableInfo);
+
+            BuildService.execute(tableInfo);
         }
     }
 }

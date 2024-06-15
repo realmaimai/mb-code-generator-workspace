@@ -4,6 +4,7 @@ import com.maimai.bean.Constants;
 import com.maimai.bean.FieldInfo;
 import com.maimai.bean.TableInfo;
 import com.maimai.utils.DateUtils;
+import com.maimai.utils.ResourceUtils;
 import com.maimai.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
@@ -104,29 +105,9 @@ public class BuildPO {
             bufferedWriter.flush();
 
         } catch (Exception e) {
-            log.info("file execution error: " + e);
+            log.info("build po error: " + e);
         } finally {
-            if (Objects.isNull(bufferedWriter)) {
-                try {
-                    bufferedWriter.close();
-                } catch (IOException e) {
-                    log.info("buffered writer closing error: " + e);
-                }
-            }
-            if (Objects.isNull(outputStreamWriter)) {
-                try {
-                    outputStreamWriter.close();
-                } catch (IOException e) {
-                    log.info("output stream writer closing error: " + e);
-                }
-            }
-            if (Objects.isNull(out)) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    log.info("output stream closing error: " + e);
-                }
-            }
+            ResourceUtils.closeQuietly(out, outputStreamWriter, bufferedWriter, log);
         }
 
     }
