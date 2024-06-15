@@ -47,6 +47,8 @@ package:
   utils: utils
   enums: enums
   mappers: mappers
+  service: service
+  serviceImpl: serviceImpl
 
 
 comment:

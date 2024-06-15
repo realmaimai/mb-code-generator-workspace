@@ -54,7 +54,7 @@ public class BuildMapper {
                 StringBuilder methodParams = new StringBuilder();
 
                 for (FieldInfo fieldInfo : fieldInfoList) {
-                    ++ index;
+                    ++index;
                     methodName.append(StringUtils.firstLetterUpperCase(fieldInfo.getPropertyName()));
                     // @Param("{propertyName}") {javaType} {propertyName}
                     methodParams.append("@Param(\"")
@@ -71,17 +71,17 @@ public class BuildMapper {
                 }
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to query data");
-                bufferedWriter.write("\t T selectBy" + methodName + "(" + methodParams+ ");");
+                bufferedWriter.write("\tT selectBy" + methodName + "(" + methodParams + ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to update data");
-                bufferedWriter.write("\t T updateBy" + methodName + "(" + methodParams+ ");");
+                bufferedWriter.write("\tint updateBy" + methodName + "(@Param(\"bean\") T t, " + methodParams + ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to delete data");
-                bufferedWriter.write("\t T deleteBy" + methodName + "(" + methodParams+ ");");
+                bufferedWriter.write("\tint deleteBy" + methodName + "(" + methodParams + ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
             }

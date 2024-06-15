@@ -10,7 +10,7 @@ public class FieldInfo {
     // field type in Java, example: int, long
     private String javaType;
     private String comment;
-    private boolean isAutoIncrement;
+    private Boolean isAutoIncrement;
 
     public String getFieldName() {
         return fieldName;
@@ -52,7 +52,7 @@ public class FieldInfo {
         this.comment = comment;
     }
 
-    public boolean isAutoIncrement() {
+    public Boolean isAutoIncrement() {
         return isAutoIncrement;
     }
 

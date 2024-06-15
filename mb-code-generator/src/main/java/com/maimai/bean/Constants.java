@@ -110,8 +110,8 @@ public class Constants {
             PATH_ENUMS = PATH_BASE +  PropertiesUtils.getString("package","enums").replace('.','/') + "/";
             PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
             PATH_MAPPERS_XMLS = PropertiesUtils.getString("path","base") + "/" +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
-//            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
-//            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","service","impl") + "/" ;
+            PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
+            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","serviceImpl") + "/" ;
 //            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
 //            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
 
@@ -133,5 +133,7 @@ public class Constants {
     public static void main(String[] args) {
         System.out.println(PATH_BASE);
         System.out.println(PATH_MAPPERS_XMLS);
+        System.out.println(PATH_SERVICE);
+        System.out.println(PATH_SERVICEIMPL);
     }
 }

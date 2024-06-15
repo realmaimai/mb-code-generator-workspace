@@ -30,10 +30,10 @@
 
 	<!-- base column list -->
 	<sql id="base_column_list">
-		id,company_id,code,product_name,price,sku_type,color_type,create_time,create_date,stock,status
+		company_id,code,product_name,price,sku_type,color_type,create_time,create_date,stock,status
 	</sql>
 
-<!-- base conditional query -->
+	<!-- base conditional query -->
 	<sql id="base_query_condition">
 		<if test="query.id != null">
 			and id = #{query.id}
@@ -70,7 +70,7 @@
 		</if>
 	</sql>
 
-<!-- base extended conditional query-->
+	<!-- base extended conditional query-->
 	<sql id="base_query_condition_extend">
 		<if test="query.companyIdFuzzy != null and query.companyIdFuzzy != ''">
 			and company_id like concat('%', #{query.companyIdFuzzy},'%') != ''
@@ -95,7 +95,7 @@
 		</if>
 	</sql>
 
-<!-- conditional query -->
+	<!-- conditional query -->
 	<sql id="query_condition">
 		<where>
 			<include refid="base_query_condition"/>
@@ -103,17 +103,370 @@
 		</where>
 	</sql>
 
-<!-- select query -->
+	<!-- select query -->
 	<select id="selectList" resultMap="base_result_map">
 		SELECT <include refid="base_column_list"/> FROM tb_product_info <include refid="query_condition"/>
 		<if test="query.orderBy!=null"> order by ${query.orderBy} </if>
 		<if test="query.paginator!=null"> limit ${query.paginator.start},${query.paginator.end} </if>
 	</select>
 
-<!-- count query -->
+	<!-- count query -->
 	<select id="selectCount" resultType="java.lang.Long">
 		select count(1) FROM tb_product_info
 		<include refid="query_condition"/>
 	</select>
+
+	<!-- single insert query -->
+	<insert id="insert" parameterType="com.maimai.entities.po.ProductInfo">
+		<selectKey keyProperty="bean.id" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO tb_product_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.id">
+				id,
+			</if>
+			<if test="bean.companyId">
+				company_id,
+			</if>
+			<if test="bean.code">
+				code,
+			</if>
+			<if test="bean.productName">
+				product_name,
+			</if>
+			<if test="bean.price">
+				price,
+			</if>
+			<if test="bean.skuType">
+				sku_type,
+			</if>
+			<if test="bean.colorType">
+				color_type,
+			</if>
+			<if test="bean.createTime">
+				create_time,
+			</if>
+			<if test="bean.createDate">
+				create_date,
+			</if>
+			<if test="bean.stock">
+				stock,
+			</if>
+			<if test="bean.status">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.id!=null">
+				#{bean.id},
+			</if>
+			<if test="bean.companyId!=null">
+				#{bean.companyId},
+			</if>
+			<if test="bean.code!=null">
+				#{bean.code},
+			</if>
+			<if test="bean.productName!=null">
+				#{bean.productName},
+			</if>
+			<if test="bean.price!=null">
+				#{bean.price},
+			</if>
+			<if test="bean.skuType!=null">
+				#{bean.skuType},
+			</if>
+			<if test="bean.colorType!=null">
+				#{bean.colorType},
+			</if>
+			<if test="bean.createTime!=null">
+				#{bean.createTime},
+			</if>
+			<if test="bean.createDate!=null">
+				#{bean.createDate},
+			</if>
+			<if test="bean.stock!=null">
+				#{bean.stock},
+			</if>
+			<if test="bean.status!=null">
+				#{bean.status},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- insertOrUpdate query -->
+	<insert id="insertOrUpdate" parameterType="com.maimai.entities.po.ProductInfo">
+		INSERT INTO tb_product_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.id">
+				id,
+			</if>
+			<if test="bean.companyId">
+				company_id,
+			</if>
+			<if test="bean.code">
+				code,
+			</if>
+			<if test="bean.productName">
+				product_name,
+			</if>
+			<if test="bean.price">
+				price,
+			</if>
+			<if test="bean.skuType">
+				sku_type,
+			</if>
+			<if test="bean.colorType">
+				color_type,
+			</if>
+			<if test="bean.createTime">
+				create_time,
+			</if>
+			<if test="bean.createDate">
+				create_date,
+			</if>
+			<if test="bean.stock">
+				stock,
+			</if>
+			<if test="bean.status">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.id!=null">
+				#{bean.id},
+			</if>
+			<if test="bean.companyId!=null">
+				#{bean.companyId},
+			</if>
+			<if test="bean.code!=null">
+				#{bean.code},
+			</if>
+			<if test="bean.productName!=null">
+				#{bean.productName},
+			</if>
+			<if test="bean.price!=null">
+				#{bean.price},
+			</if>
+			<if test="bean.skuType!=null">
+				#{bean.skuType},
+			</if>
+			<if test="bean.colorType!=null">
+				#{bean.colorType},
+			</if>
+			<if test="bean.createTime!=null">
+				#{bean.createTime},
+			</if>
+			<if test="bean.createDate!=null">
+				#{bean.createDate},
+			</if>
+			<if test="bean.stock!=null">
+				#{bean.stock},
+			</if>
+			<if test="bean.status!=null">
+				#{bean.status},
+			</if>
+		</trim>
+		on DUPLICATE key update
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.companyId!=null">
+				company_id = VALUES(company_id),
+			</if>
+			<if test="bean.productName!=null">
+				product_name = VALUES(product_name),
+			</if>
+			<if test="bean.price!=null">
+				price = VALUES(price),
+			</if>
+			<if test="bean.createTime!=null">
+				create_time = VALUES(create_time),
+			</if>
+			<if test="bean.createDate!=null">
+				create_date = VALUES(create_date),
+			</if>
+			<if test="bean.stock!=null">
+				stock = VALUES(stock),
+			</if>
+			<if test="bean.status!=null">
+				status = VALUES(status),
+			</if>
+		</trim>
+	</insert>
+
+	<!-- batch insert query -->
+	<insert id="insertBatch" parameterType="com.maimai.entities.po.ProductInfo">
+		INSERT INTO tb_product_info (company_id,code,product_name,price,sku_type,color_type,create_time,create_date,stock,status) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.companyId},#{item.code},#{item.productName},#{item.price},#{item.skuType},#{item.colorType},#{item.createTime},#{item.createDate},#{item.stock},#{item.status})
+		</foreach>
+	</insert>
+
+	<!-- batch insert or update query -->
+	<insert id="insertOrUpdateBatch" parameterType="com.maimai.entities.po.ProductInfo">
+		INSERT INTO tb_product_info (company_id,code,product_name,price,sku_type,color_type,create_time,create_date,stock,status) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.companyId},#{item.code},#{item.productName},#{item.price},#{item.skuType},#{item.colorType},#{item.createTime},#{item.createDate},#{item.stock},#{item.status})
+		</foreach>
+		on DUPLICATE key update
+		id = VALUES(id),company_id = VALUES(company_id),code = VALUES(code),product_name = VALUES(product_name),price = VALUES(price),sku_type = VALUES(sku_type),color_type = VALUES(color_type),create_time = VALUES(create_time),create_date = VALUES(create_date),stock = VALUES(stock),status = VALUES(status)
+	</insert>
+
+	<!-- select query based on Id -->
+	<select id="selectById" resultMap="base_result_map">
+		select
+		<include refid="base_column_list"/>
+		from tb_product_info where id=#{id}
+	</select>
+	<!-- delete query based on Id -->
+	<delete id="deleteById">
+		delete
+		from tb_product_info where id=#{id}
+	</delete>
+	<!-- update query based on Id -->
+	<update id="updateById" parameterType="com.maimai.entities.po.ProductInfo">
+		UPDATE tb_product_info
+		<set>
+			<if test="bean.id!= null">
+				id= #{bean.id},
+			</if>
+			<if test="bean.companyId!= null">
+				company_id= #{bean.companyId},
+			</if>
+			<if test="bean.code!= null">
+				code= #{bean.code},
+			</if>
+			<if test="bean.productName!= null">
+				product_name= #{bean.productName},
+			</if>
+			<if test="bean.price!= null">
+				price= #{bean.price},
+			</if>
+			<if test="bean.skuType!= null">
+				sku_type= #{bean.skuType},
+			</if>
+			<if test="bean.colorType!= null">
+				color_type= #{bean.colorType},
+			</if>
+			<if test="bean.createTime!= null">
+				create_time= #{bean.createTime},
+			</if>
+			<if test="bean.createDate!= null">
+				create_date= #{bean.createDate},
+			</if>
+			<if test="bean.stock!= null">
+				stock= #{bean.stock},
+			</if>
+			<if test="bean.status!= null">
+				status= #{bean.status},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- select query based on Code -->
+	<select id="selectByCode" resultMap="base_result_map">
+		select
+		<include refid="base_column_list"/>
+		from tb_product_info where code=#{code}
+	</select>
+	<!-- delete query based on Code -->
+	<delete id="deleteByCode">
+		delete
+		from tb_product_info where code=#{code}
+	</delete>
+	<!-- update query based on Code -->
+	<update id="updateByCode" parameterType="com.maimai.entities.po.ProductInfo">
+		UPDATE tb_product_info
+		<set>
+			<if test="bean.id!= null">
+				id= #{bean.id},
+			</if>
+			<if test="bean.companyId!= null">
+				company_id= #{bean.companyId},
+			</if>
+			<if test="bean.code!= null">
+				code= #{bean.code},
+			</if>
+			<if test="bean.productName!= null">
+				product_name= #{bean.productName},
+			</if>
+			<if test="bean.price!= null">
+				price= #{bean.price},
+			</if>
+			<if test="bean.skuType!= null">
+				sku_type= #{bean.skuType},
+			</if>
+			<if test="bean.colorType!= null">
+				color_type= #{bean.colorType},
+			</if>
+			<if test="bean.createTime!= null">
+				create_time= #{bean.createTime},
+			</if>
+			<if test="bean.createDate!= null">
+				create_date= #{bean.createDate},
+			</if>
+			<if test="bean.stock!= null">
+				stock= #{bean.stock},
+			</if>
+			<if test="bean.status!= null">
+				status= #{bean.status},
+			</if>
+		</set>
+		where code=#{code}
+	</update>
+
+	<!-- select query based on SkuTypeAndColorType -->
+	<select id="selectBySkuTypeAndColorType" resultMap="base_result_map">
+		select
+		<include refid="base_column_list"/>
+		from tb_product_info where sku_type=#{skuType} and color_type=#{colorType}
+	</select>
+	<!-- delete query based on SkuTypeAndColorType -->
+	<delete id="deleteBySkuTypeAndColorType">
+		delete
+		from tb_product_info where sku_type=#{skuType} and color_type=#{colorType}
+	</delete>
+	<!-- update query based on SkuTypeAndColorType -->
+	<update id="updateBySkuTypeAndColorType" parameterType="com.maimai.entities.po.ProductInfo">
+		UPDATE tb_product_info
+		<set>
+			<if test="bean.id!= null">
+				id= #{bean.id},
+			</if>
+			<if test="bean.companyId!= null">
+				company_id= #{bean.companyId},
+			</if>
+			<if test="bean.code!= null">
+				code= #{bean.code},
+			</if>
+			<if test="bean.productName!= null">
+				product_name= #{bean.productName},
+			</if>
+			<if test="bean.price!= null">
+				price= #{bean.price},
+			</if>
+			<if test="bean.skuType!= null">
+				sku_type= #{bean.skuType},
+			</if>
+			<if test="bean.colorType!= null">
+				color_type= #{bean.colorType},
+			</if>
+			<if test="bean.createTime!= null">
+				create_time= #{bean.createTime},
+			</if>
+			<if test="bean.createDate!= null">
+				create_date= #{bean.createDate},
+			</if>
+			<if test="bean.stock!= null">
+				stock= #{bean.stock},
+			</if>
+			<if test="bean.status!= null">
+				status= #{bean.status},
+			</if>
+		</set>
+		where sku_type=#{skuType} and color_type=#{colorType}
+	</update>
+
+
 
 </mapper>

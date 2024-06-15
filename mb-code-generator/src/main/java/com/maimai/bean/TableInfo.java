@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class TableInfo {
     private String tableName;
+    // class name like "ProductInfo"
     private String beanName;
     private String beanParamName;
     private String comment;
