@@ -1,6 +1,5 @@
 package com.maimai.entities.vo;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

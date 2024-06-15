@@ -65,6 +65,8 @@ public class BuildBaseClass {
         // create VO file
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_VO + ";");
+        headerInfo.add("import java.util.ArrayList;\n" +
+                "import java.util.List;");
         // paginationResultVO
         build(headerInfo , "PaginationResultVO", Constants.PATH_VO);
 //        // responseVO
