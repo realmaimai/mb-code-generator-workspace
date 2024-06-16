@@ -35,14 +35,9 @@ git clone https://github.com/your-username/mb-code-generator-workspace
 cd mb-code-generator-workspace
 ```
 
-If you are using Maven, you can build the project with:
-```sh
-mvn clean install
-```
-
 ## Usage
-This repo contains a demo project, you can whether:
-a. use the demo to test the api directly or
+This repo contains a demo project, you can whether:\n
+a. use the demo to test the api directly or\n
 b. set up the configuration in mb-code-generator-workspace/mb-code-generator/src/main/resources/application.yml and run the application, it will automatically generate code for your project
 
 ## Application Properties
