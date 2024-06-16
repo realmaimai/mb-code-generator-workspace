@@ -6,9 +6,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
-- [Running Tests](#running-tests)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Project Description
@@ -36,11 +34,11 @@ cd mb-code-generator-workspace
 ```
 
 ## Usage
-This repo contains a demo project, you can whether:\n
-a. use the demo to test the api directly or\n
+This repo contains a demo project, you can whether:
+a. use the demo to test the api directly or
 b. set up the configuration in mb-code-generator-workspace/mb-code-generator/src/main/resources/application.yml and run the application, it will automatically generate code for your project
 
-## Application Properties
+## Configuration
 Application properties inside mb-code-generator-workspace/mb-code-generator/src/main/resources/application.yml
 ```yml
 server.port=8080
