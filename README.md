@@ -12,9 +12,10 @@
 ## Project Description
 
 MyBatis Code Generator is a Spring Boot tool designed to simplify the process of generating MySQL database and MyBatis-related codes, including controllers, services, service implementations, and mappers. This tool aims to reduce the repetitive tasks involved in setting up database interactions and CRUD operations, allowing developers to focus on core functionalities.
-![the generated files](assets/content.png)
+![the generated files](assets/contents.png)
 ![the generated controller file](assets/controller.png)
 ![the generated service file](assets/service.png)
+![the generated mapper file](assets/mapper.png)
 ![the generated mapper xml file](assets/mapperxml.png)
 
 
