@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestControllerAdvice
-public class AGlobalExceptionHanderController extends ABaseController{
-    private static final Logger logger = LoggerFactory.getLogger(AGlobalExceptionHanderController.class);
+public class GlobalExceptionHandlerController extends BaseController{
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandlerController.class);
 
     @ExceptionHandler(value = Exception.class)
     Object handleException(Exception e, HttpServletRequest request) {
@@ -21,7 +21,7 @@ public class AGlobalExceptionHanderController extends ABaseController{
         ResponseVO ajaxResponse = new ResponseVO();
         if (e instanceof NoHandlerFoundException) {
             ajaxResponse.setCode(ResponseCodeEnum.CODE_404.getCode());
-            ajaxResponse.setInfo(ResponseCodeEnum.CODE_404.getmsg());
+            ajaxResponse.setInfo(ResponseCodeEnum.CODE_404.getMsg());
             ajaxResponse.setStatus(STATUS_ERROR);
 
         } else if (e instanceof BusinessException) {

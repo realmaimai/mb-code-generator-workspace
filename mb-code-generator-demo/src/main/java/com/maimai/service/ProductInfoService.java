@@ -7,68 +7,69 @@ import com.maimai.entities.vo.PaginationResultVO;
 import java.util.List;
 /**
  * @Description: Product Information Table Service
- *
  * @Author: maimai
- * @Date: 20240615
+ * @Date: 20240616
  */
 public interface ProductInfoService {
 
 	List<ProductInfo> getListByParam(ProductInfoQuery query);
 
-	Long getCountByParam(ProductInfoQuery query);
+	Integer getCountByParam(ProductInfoQuery query);
 
 	PaginationResultVO<ProductInfo> getListByPage(ProductInfoQuery query);
 
-	Long insert(ProductInfo bean);
+	Integer insert(ProductInfo bean);
 
-	Long insertBatch(List<ProductInfo> beanList);
+	Integer insertOrUpdate(ProductInfo bean);
 
-	Long insertOrUpdateBatch(List<ProductInfo> beanList);
+	Integer insertBatch(List<ProductInfo> beanList);
+
+	Integer insertOrUpdateBatch(List<ProductInfo> beanList);
 
 	/**
 	 * based on Id to query data
 	 */
-	ProductInfo getById(Integer id);
+	ProductInfo getProductInfoById(Integer id);
 
 	/**
 	 * based on Id to update data
 	 */
-	Long updateById(ProductInfo bean, Integer id);
+	Integer updateProductInfoById(ProductInfo bean, Integer id);
 
 	/**
 	 * based on Id to delete data
 	 */
-	Long deleteById(Integer id);
+	Integer deleteProductInfoById(Integer id);
 
 	/**
 	 * based on Code to query data
 	 */
-	ProductInfo getByCode(String code);
+	ProductInfo getProductInfoByCode(String code);
 
 	/**
 	 * based on Code to update data
 	 */
-	Long updateByCode(ProductInfo bean, String code);
+	Integer updateProductInfoByCode(ProductInfo bean, String code);
 
 	/**
 	 * based on Code to delete data
 	 */
-	Long deleteByCode(String code);
+	Integer deleteProductInfoByCode(String code);
 
 	/**
 	 * based on SkuTypeAndColorType to query data
 	 */
-	ProductInfo getBySkuTypeAndColorType(Integer skuType, Integer colorType);
+	ProductInfo getProductInfoBySkuTypeAndColorType(Integer skuType, Integer colorType);
 
 	/**
 	 * based on SkuTypeAndColorType to update data
 	 */
-	Long updateBySkuTypeAndColorType(ProductInfo bean, Integer skuType, Integer colorType);
+	Integer updateProductInfoBySkuTypeAndColorType(ProductInfo bean, Integer skuType, Integer colorType);
 
 	/**
 	 * based on SkuTypeAndColorType to delete data
 	 */
-	Long deleteBySkuTypeAndColorType(Integer skuType, Integer colorType);
+	Integer deleteProductInfoBySkuTypeAndColorType(Integer skuType, Integer colorType);
 
 
 }

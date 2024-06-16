@@ -1,0 +1,61 @@
+package com.maimai.exception;
+
+import com.maimai.enums.ResponseCodeEnum;
+
+public class BusinessException extends Exception{
+    private  ResponseCodeEnum CodeEnum;
+
+    private Integer code;
+
+    private String msg;
+
+    public BusinessException(String msg, Throwable e) {
+        super(msg,e);
+        this.msg = msg;
+    }
+
+    public BusinessException(String msg) {
+        super(msg);
+        this.msg = msg;
+    }
+
+    public BusinessException(Throwable e) {
+        super(e);
+    }
+
+    public BusinessException(ResponseCodeEnum codeEnum) {
+        super(codeEnum.getMsg());
+        this.code = codeEnum.getCode();
+        this.msg = codeEnum.getMsg();
+    }
+
+    public BusinessException(Integer code, String msg) {
+        super(msg);
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public ResponseCodeEnum getCodeEnum() {
+        return CodeEnum;
+    }
+
+    public void setCodeEnum(ResponseCodeEnum codeEnum) {
+        CodeEnum = codeEnum;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+}

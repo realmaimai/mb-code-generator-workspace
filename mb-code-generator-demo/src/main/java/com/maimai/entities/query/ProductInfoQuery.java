@@ -6,9 +6,8 @@ import java.util.Date;
 
 /**
  * @Description: Product Information Table
- *
  * @Author: maimai
- * @Date: 20240615
+ * @Date: 20240616
  */
 @Data
 public class ProductInfoQuery extends BaseQuery {

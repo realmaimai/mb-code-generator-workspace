@@ -1,3 +1,9 @@
+package com.maimai.controller;
+
+import com.maimai.entities.vo.ResponseVO;
+
+import com.maimai.enums.ResponseCodeEnum;
+
 public class BaseController {
     protected static final String STATUS_SUCCESS = "success";
 

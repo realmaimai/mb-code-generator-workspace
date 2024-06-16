@@ -113,8 +113,8 @@ public class Constants {
             PATH_MAPPERS_XMLS = PropertiesUtils.getString("path","base") + "/" +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
             PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
             PATH_SERVICEIMPL = PATH_BASE + StringUtils.replace(PropertiesUtils.getString("package","serviceImpl"), ".", "/") + "/" ;
-//            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
-//            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
+            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
+            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
 
             IGNORE_BEAN_TOJSON_FIELD = PropertiesUtils.getString("ignore", "bean", "tojson", "field");
             IGNORE_BEAN_TOJSON_EXPRESSION = PropertiesUtils.getString("ignore", "bean", "tojson", "expression");

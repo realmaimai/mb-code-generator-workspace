@@ -15,7 +15,7 @@ ignore:
       expression: "@JsonIgnore"
       class: import com.fasterxml.jackson.annotation.JsonIgnore
 
-# date format serialization
+# date format serialization package
 bean:
   date:
     format:
@@ -33,7 +33,7 @@ suffix:
       end: End
   mapper: Mapper
 
-# base location
+# base location of project that needs to generate code
 path:
   base: D:/Coding/mb-code-generator-workspace/mb-code-generator-demo/src/main
 
@@ -48,7 +48,9 @@ package:
   enums: enums
   mappers: mappers
   service: service
-  serviceImpl: serviceImpl
+  serviceImpl: service.impl
+  controller: controller
+  exception: exception
 
 
 comment:

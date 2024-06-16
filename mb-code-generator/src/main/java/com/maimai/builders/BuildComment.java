@@ -13,8 +13,6 @@ public class BuildComment {
         bw.newLine();
         bw.write(" * @Description: " + classComment);
         bw.newLine();
-        bw.write(" *");
-        bw.newLine();
         bw.write(" * @Author: " + Constants.COMMENT_AUTHOR);
         bw.newLine();
         bw.write(" * @Date: " + DateUtils.format(new Date(), DateUtils.YYYYMMDD));

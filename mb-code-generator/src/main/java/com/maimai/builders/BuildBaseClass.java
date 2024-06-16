@@ -20,17 +20,22 @@ public class BuildBaseClass {
         headerInfo.add("package " + Constants.PACKAGE_UTILS + ";");
         build(headerInfo, "DateUtils", Constants.PATH_UTILS);
 
+        // create response code Enum
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_ENUMS + ";");
+        build(headerInfo, "ResponseCodeEnum", Constants.PATH_ENUMS);
+
         // create base mapper
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_MAPPERS + ";");
         build(headerInfo, "BaseMapper", Constants.PATH_MAPPERS);
 
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_EXCEPTION + ";");
-//        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
-////        生成businessException
-//        build(headerInfo, "BusinessException", Constants.PATH_EXCEPTION);
-//
+        // create businessException
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_EXCEPTION + ";");
+        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
+        build(headerInfo, "BusinessException", Constants.PATH_EXCEPTION);
+
         // create page size enums file
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_ENUMS + ";");
@@ -42,21 +47,21 @@ public class BuildBaseClass {
         headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".PageSize;");
         build(headerInfo, "Paginator", Constants.PATH_QUERY);
 
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_CONTROLLER + ";");
-//        headerInfo.add("import " + Constants.PACKAGE_VO + ".ResponseVO;");
-//        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
-////        生成ABaseController
-//        build(headerInfo, "ABaseController", Constants.PATH_CONTROLLER);
-//
-//        headerInfo.clear();
-//        headerInfo.add("package " + Constants.PACKAGE_CONTROLLER + ";");
-//        headerInfo.add("import " + Constants.PACKAGE_VO + ".ResponseVO;");
-//        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
-//        headerInfo.add("import " + Constants.PACKAGE_EXCEPTION + ".BusinessException;");
-////        生成AGlobalExceptionHandlerController
-//        build(headerInfo, "AGlobalExceptionHandlerController", Constants.PATH_CONTROLLER);
-//
+        // create BaseController
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_CONTROLLER + ";");
+        headerInfo.add("import " + Constants.PACKAGE_VO + ".ResponseVO;");
+        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
+        build(headerInfo, "BaseController", Constants.PATH_CONTROLLER);
+
+        // create ExceptionHandler
+        headerInfo.clear();
+        headerInfo.add("package " + Constants.PACKAGE_CONTROLLER + ";");
+        headerInfo.add("import " + Constants.PACKAGE_VO + ".ResponseVO;");
+        headerInfo.add("import " + Constants.PACKAGE_ENUMS + ".ResponseCodeEnum;");
+        headerInfo.add("import " + Constants.PACKAGE_EXCEPTION + ".BusinessException;");
+        build(headerInfo, "GlobalExceptionHandlerController", Constants.PATH_CONTROLLER);
+
         // create BaseQuery file
         headerInfo.clear();
         headerInfo.add("package " + Constants.PACKAGE_QUERY + ";");
@@ -69,8 +74,8 @@ public class BuildBaseClass {
                 "import java.util.List;");
         // paginationResultVO
         build(headerInfo , "PaginationResultVO", Constants.PATH_VO);
-//        // responseVO
-//        build(headerInfo , "ResponseVO", Constants.PATH_VO);
+        // responseVO
+        build(headerInfo , "ResponseVO", Constants.PATH_VO);
     }
 
     private static void build(List<String> headerInfo, String fileName, String outputPath) {
