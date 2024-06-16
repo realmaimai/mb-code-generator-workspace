@@ -49,19 +49,22 @@ public class BuildService {
             bw.write("\tList<" + tableInfo.getBeanName() + "> getListByParam(" + tableInfo.getBeanParamName() + " query);");
             bw.newLine();
             bw.newLine();
-            bw.write("\tLong getCountByParam(" + tableInfo.getBeanParamName() + " query);");
+            bw.write("\tInteger getCountByParam(" + tableInfo.getBeanParamName() + " query);");
             bw.newLine();
             bw.newLine();
             bw.write("\tPaginationResultVO<" + tableInfo.getBeanName() + "> getListByPage(" + tableInfo.getBeanParamName() + " query);");
             bw.newLine();
             bw.newLine();
-            bw.write("\tLong insert(" + tableInfo.getBeanName() + " bean);");
+            bw.write("\tInteger insert(" + tableInfo.getBeanName() + " bean);");
             bw.newLine();
             bw.newLine();
-            bw.write("\tLong insertBatch(List<" + tableInfo.getBeanName() + "> beanList);");
+            bw.write("\tInteger insertOrUpdate(" + tableInfo.getBeanName() + " bean);");
             bw.newLine();
             bw.newLine();
-            bw.write("\tLong insertOrUpdateBatch(List<" + tableInfo.getBeanName() + "> beanList);");
+            bw.write("\tInteger insertBatch(List<" + tableInfo.getBeanName() + "> beanList);");
+            bw.newLine();
+            bw.newLine();
+            bw.write("\tInteger insertOrUpdateBatch(List<" + tableInfo.getBeanName() + "> beanList);");
             bw.newLine();
             bw.newLine();
 
@@ -91,17 +94,17 @@ public class BuildService {
                 }
 
                 BuildComment.createFieldComment(bw, "based on " + methodName + " to query data");
-                bw.write("\t" + tableInfo.getBeanName() + " getBy" + methodName + "(" + methodParams + ");");
+                bw.write("\t" + tableInfo.getBeanName() + " get"+tableInfo.getBeanName()+"By" + methodName + "(" + methodParams + ");");
                 bw.newLine();
                 bw.newLine();
 
                 BuildComment.createFieldComment(bw, "based on " + methodName + " to update data");
-                bw.write("\tLong updateBy" + methodName + "(" + tableInfo.getBeanName() + " bean, " + methodParams + ");");
+                bw.write("\tInteger update"+tableInfo.getBeanName()+"By" + methodName + "(" + tableInfo.getBeanName() + " bean, " + methodParams + ");");
                 bw.newLine();
                 bw.newLine();
 
                 BuildComment.createFieldComment(bw, "based on " + methodName + " to delete data");
-                bw.write("\tLong deleteBy" + methodName + "(" + methodParams + ");");
+                bw.write("\tInteger delete"+tableInfo.getBeanName()+"By" + methodName + "(" + methodParams + ");");
                 bw.newLine();
                 bw.newLine();
             }
