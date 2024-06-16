@@ -1,4 +1,4 @@
-# Project Name
+# MyBatis Code Generator
 
 ## Table of Contents
 - [Project Description](#project-description)
@@ -33,12 +33,14 @@ MyBatis Code Generator is a Spring Boot tool designed to simplify the process of
 ```sh
 git clone https://github.com/your-username/mb-code-generator-workspace
 cd mb-code-generator-workspace
-```sh
+```
+
 If you are using Maven, you can build the project with:
+```sh
 mvn clean install
 ```
 
-Usage
+## Usage
 This repo contains a demo project, you can whether:
 a. use the demo to test the api directly or
 b. set up the configuration in mb-code-generator-workspace/mb-code-generator/src/main/resources/application.yml and run the application, it will automatically generate code for your project
@@ -47,9 +49,36 @@ b. set up the configuration in mb-code-generator-workspace/mb-code-generator/src
 Application properties inside mb-code-generator-workspace/mb-code-generator/src/main/resources/application.yml
 ```yml
 server.port=8080
-spring.datasource.url=jdbc:mysql://localhost:3306/yourdatabase
+spring.datasource.url=jdbc:mysql://localhost:3306/your-database
 spring.datasource.username=root
-spring.datasource.password=yourpassword
+spring.datasource.password=your password
+...
+ignore:
+  table:
+    prefix: "true"
+  bean:
+    # support multiple json handle class
+    tojson:
+      field: your preferred field that needs to be ignored
+      expression: your preferred Json ignore annotation (e.g. "@JsonIgnore")
+      class: your preferred Json ignore package, don't forget to add the "import" keyword (e.g. import com.fasterxml.jackson.annotation.JsonIgnore)
+...
+bean:
+  date:
+    format:
+      serialization: your preferred date serialization annotation (e.g. "@JsonFormat(pattern = \"%s\", timezone = \"GMT+2\")")
+      serialization-class: your preferred date serialization package (e.g. com.fasterxml.jackson.annotation.JsonFormat)
+      deserialization: your preferred date deserialization annotation (e.g. "@DateTimeFormat(pattern = \"%s\")")
+      deserialization-class: your preferred date deserialization package (e.g. org.springframework.format.annotation.DateTimeFormat)
+...
+path:
+  base: your project location (e.g. "D:/Coding/mb-code-generator-workspace/mb-code-generator-demo/src/main")
+...
+package:
+  base: your package name (e.g. "com.maimai")
+...
+comment:
+  author: author name
 ```
 
 
