@@ -48,7 +48,7 @@ package:
   enums: enums
   mappers: mappers
   service: service
-  serviceImpl: service.impl
+  serviceImpl: serviceImpl
 
 
 comment:
