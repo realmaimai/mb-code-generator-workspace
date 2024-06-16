@@ -34,8 +34,8 @@ cd mb-code-generator-workspace
 ```
 
 ## Usage
-This repo contains a demo project, you can whether:
-a. use the demo to test the api directly or
+This repo contains a demo project, you can whether:<br>
+a. use the demo to test the api directly or<br>
 b. set up the configuration in mb-code-generator-workspace/mb-code-generator/src/main/resources/application.yml and run the application, it will automatically generate code for your project
 
 ## Configuration
@@ -84,5 +84,5 @@ comment:
 6. Open a Pull Request
 
 ## Contact
-Mai Zhang - yulezh@proton.me
+Mai Zhang: yulezh@proton.me<br>
 Project Link: https://github.com/realmaimai/mb-code-generator-workspace
