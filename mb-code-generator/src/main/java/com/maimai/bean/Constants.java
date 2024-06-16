@@ -2,6 +2,7 @@ package com.maimai.bean;
 
 import com.maimai.utils.PropertiesUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.plexus.util.StringUtils;
 
 @Slf4j
 public class Constants {
@@ -97,7 +98,7 @@ public class Constants {
             PACKAGE_ENUMS = PACKAGE_BASE + "." + PropertiesUtils.getString("package","enums");
             PACKAGE_MAPPERS = PACKAGE_BASE + "." + PropertiesUtils.getString("package","mappers");
             PACKAGE_SERVICE = PACKAGE_BASE + "." + PropertiesUtils.getString("package","service");
-            PACKAGE_SERVICEIMPL = PACKAGE_BASE + "." + PropertiesUtils.getString("package","service","impl");
+            PACKAGE_SERVICEIMPL = PACKAGE_BASE + "." + PropertiesUtils.getString("package","serviceImpl");
             PACKAGE_CONTROLLER = PACKAGE_BASE + "." + PropertiesUtils.getString("package","controller");
             PACKAGE_EXCEPTION = PACKAGE_BASE + "." + PropertiesUtils.getString("package","exception");
 
@@ -111,7 +112,7 @@ public class Constants {
             PATH_MAPPERS = PATH_BASE + PropertiesUtils.getString("package","mappers").replace('.','/') + "/";
             PATH_MAPPERS_XMLS = PropertiesUtils.getString("path","base") + "/" +  PATH_RESOURCE + "/" + PACKAGE_MAPPERS.replace('.','/')+"/";
             PATH_SERVICE = PATH_BASE + PropertiesUtils.getString("package","service") + "/";
-            PATH_SERVICEIMPL = PATH_BASE + PropertiesUtils.getString("package","serviceImpl") + "/" ;
+            PATH_SERVICEIMPL = PATH_BASE + StringUtils.replace(PropertiesUtils.getString("package","serviceImpl"), ".", "/") + "/" ;
 //            PATH_CONTROLLER = PATH_BASE + PropertiesUtils.getString("package","controller") + "/" ;
 //            PATH_EXCEPTION = PATH_BASE + PropertiesUtils.getString("package","exception") + "/" ;
 

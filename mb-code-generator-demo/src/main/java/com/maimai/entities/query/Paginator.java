@@ -4,15 +4,15 @@ import com.maimai.enums.PageSize;
 
 public class Paginator {
     private Integer pageNo;
-    private int countTotal;
-    private int pageSize;
-    private int pageTotal;
-    private int start;
-    private int end;
+    private Integer countTotal;
+    private Integer pageSize;
+    private Integer pageTotal;
+    private Integer start;
+    private Integer end;
 
     public Paginator() {}
 
-    public Paginator(Integer pageNo, int countTotal, int pageSize) {
+    public Paginator(Integer pageNo, Integer countTotal, Integer pageSize) {
         if (null == pageNo) {
             pageNo = 0;
         }
@@ -21,7 +21,7 @@ public class Paginator {
         this.pageSize = pageSize;
     }
 
-    public Paginator(int start, int end) {
+    public Paginator(Integer start, Integer end) {
         this.start = start;
         this.end = end;
     }
@@ -46,51 +46,51 @@ public class Paginator {
         this.end = this.pageSize;
     }
 
-    public int getPageNo() {
+    public Integer getPageNo() {
         return pageNo;
     }
 
-    public void setPageNo(int pageNo) {
+    public void setPageNo(Integer pageNo) {
         this.pageNo = pageNo;
     }
 
-    public int getCountTotal() {
+    public Integer getCountTotal() {
         return countTotal;
     }
 
-    public void setCountTotal(int countTotal) {
+    public void setCountTotal(Integer countTotal) {
         this.countTotal = countTotal;
     }
 
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
-    public int getPageTotal() {
+    public Integer getPageTotal() {
         return pageTotal;
     }
 
-    public void setPageTotal(int pageTotal) {
+    public void setPageTotal(Integer pageTotal) {
         this.pageTotal = pageTotal;
     }
 
-    public int getStart() {
+    public Integer getStart() {
         return start;
     }
 
-    public void setStart(int start) {
+    public void setStart(Integer start) {
         this.start = start;
     }
 
-    public int getEnd() {
+    public Integer getEnd() {
         return end;
     }
 
-    public void setEnd(int end) {
+    public void setEnd(Integer end) {
         this.end = end;
     }
 }

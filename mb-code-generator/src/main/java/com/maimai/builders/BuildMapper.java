@@ -77,12 +77,12 @@ public class BuildMapper {
                 bufferedWriter.newLine();
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to update data");
-                bufferedWriter.write("\tint updateBy" + methodName + "(@Param(\"bean\") T t, " + methodParams + ");");
+                bufferedWriter.write("\tInteger updateBy" + methodName + "(@Param(\"bean\") T t, " + methodParams + ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
 
                 BuildComment.createFieldComment(bufferedWriter, "based on " + methodName + " to delete data");
-                bufferedWriter.write("\tint deleteBy" + methodName + "(" + methodParams + ");");
+                bufferedWriter.write("\tInteger deleteBy" + methodName + "(" + methodParams + ");");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
             }
